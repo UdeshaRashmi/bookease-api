@@ -23,28 +23,34 @@ import { UpdateBookingDto } from './dto/update-booking.dto';
 import { UpdateBookingStatusDto } from './dto/update-booking-status.dto';
 
 @ApiTags('Bookings')
-@ApiBearerAuth()
 @Controller('bookings')
-@UseGuards(JwtAuthGuard)
 export class BookingsController {
   constructor(private readonly bookingsService: BookingsService) {}
 
+  // Public endpoint - customer can create a booking without login
   @Post()
   create(@Body() createBookingDto: CreateBookingDto) {
     return this.bookingsService.create(createBookingDto);
   }
 
+  // Protected endpoints
   @Get()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   findAll(@Query() query: GetBookingsQueryDto) {
     return this.bookingsService.findAll(query);
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   findOne(@Param('id') id: string) {
     return this.bookingsService.findOne(id);
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   replace(
     @Param('id') id: string,
     @Body() replaceBookingDto: ReplaceBookingDto,
@@ -53,11 +59,15 @@ export class BookingsController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   update(@Param('id') id: string, @Body() updateBookingDto: UpdateBookingDto) {
     return this.bookingsService.update(id, updateBookingDto);
   }
 
   @Patch(':id/status')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   updateStatus(
     @Param('id') id: string,
     @Body() updateBookingStatusDto: UpdateBookingStatusDto,
@@ -66,11 +76,15 @@ export class BookingsController {
   }
 
   @Patch(':id/cancel')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   cancel(@Param('id') id: string) {
     return this.bookingsService.cancel(id);
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @HttpCode(HttpStatus.OK)
   remove(@Param('id') id: string) {
     return this.bookingsService.remove(id);
