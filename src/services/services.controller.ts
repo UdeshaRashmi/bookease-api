@@ -10,11 +10,15 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { ServicesService } from './services.service';
 
+@ApiTags('Services')
+@ApiBearerAuth()
 @Controller('services')
 @UseGuards(JwtAuthGuard)
 export class ServicesController {
