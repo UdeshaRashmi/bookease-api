@@ -9,36 +9,41 @@ import {
   Patch,
   Post,
   Put,
+  Query,
+  UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { BookingsService } from './bookings.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
+import { GetBookingsQueryDto } from './dto/get-bookings-query.dto';
 import { ReplaceBookingDto } from './dto/replace-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { UpdateBookingStatusDto } from './dto/update-booking-status.dto';
 
+@ApiTags('Bookings')
+@ApiBearerAuth()
 @Controller('bookings')
+@UseGuards(JwtAuthGuard)
 export class BookingsController {
   constructor(private readonly bookingsService: BookingsService) {}
 
-  // Create booking
   @Post()
   create(@Body() createBookingDto: CreateBookingDto) {
     return this.bookingsService.create(createBookingDto);
   }
 
-  // Retrieve all bookings
   @Get()
-  findAll() {
-    return this.bookingsService.findAll();
+  findAll(@Query() query: GetBookingsQueryDto) {
+    return this.bookingsService.findAll(query);
   }
 
-  // Retrieve one booking
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.bookingsService.findOne(id);
   }
 
-  // Full update
   @Put(':id')
   replace(
     @Param('id') id: string,
@@ -47,13 +52,11 @@ export class BookingsController {
     return this.bookingsService.replace(id, replaceBookingDto);
   }
 
-  // Partial update
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBookingDto: UpdateBookingDto) {
     return this.bookingsService.update(id, updateBookingDto);
   }
 
-  // Update booking status
   @Patch(':id/status')
   updateStatus(
     @Param('id') id: string,
@@ -62,13 +65,11 @@ export class BookingsController {
     return this.bookingsService.updateStatus(id, updateBookingStatusDto);
   }
 
-  // Cancel booking
   @Patch(':id/cancel')
   cancel(@Param('id') id: string) {
     return this.bookingsService.cancel(id);
   }
 
-  // Permanently delete booking
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   remove(@Param('id') id: string) {

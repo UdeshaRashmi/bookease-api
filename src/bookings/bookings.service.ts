@@ -3,9 +3,13 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { BookingStatus } from '../../generated/prisma/client';
+import { BookingStatus, Prisma } from '../../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
+import {
+  BookingSortOrder,
+  GetBookingsQueryDto,
+} from './dto/get-bookings-query.dto';
 import { ReplaceBookingDto } from './dto/replace-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { UpdateBookingStatusDto } from './dto/update-booking-status.dto';
@@ -18,12 +22,12 @@ export class BookingsService {
     const selectedDate = new Date(bookingDate);
     const today = new Date();
 
-    today.setHours(0, 0, 0, 0);
-    selectedDate.setHours(0, 0, 0, 0);
-
     if (Number.isNaN(selectedDate.getTime())) {
       throw new BadRequestException('Invalid booking date');
     }
+
+    today.setHours(0, 0, 0, 0);
+    selectedDate.setHours(0, 0, 0, 0);
 
     if (selectedDate < today) {
       throw new BadRequestException('Booking date cannot be in the past');
@@ -118,16 +122,105 @@ export class BookingsService {
     });
   }
 
-  // RETRIEVE ALL
-  async findAll() {
-    return this.prisma.booking.findMany({
-      include: {
-        service: true,
+  // RETRIEVE ALL + PAGINATION + SEARCH + FILTER + SORTING
+  async findAll(query: GetBookingsQueryDto) {
+    const {
+      page = 1,
+      limit = 10,
+      search,
+      status,
+      date,
+      serviceId,
+      sort = BookingSortOrder.DESC,
+    } = query;
+
+    const skip = (page - 1) * limit;
+
+    const where: Prisma.BookingWhereInput = {};
+
+    if (search) {
+      where.OR = [
+        {
+          customerName: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+        {
+          customerEmail: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+        {
+          customerPhone: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+        {
+          service: {
+            title: {
+              contains: search,
+              mode: 'insensitive',
+            },
+          },
+        },
+      ];
+    }
+
+    if (status) {
+      where.status = status;
+    }
+
+    if (serviceId) {
+      where.serviceId = serviceId;
+    }
+
+    if (date) {
+      const bookingDate = new Date(date);
+
+      if (Number.isNaN(bookingDate.getTime())) {
+        throw new BadRequestException('Invalid booking date filter');
+      }
+
+      bookingDate.setHours(0, 0, 0, 0);
+
+      const nextDate = new Date(bookingDate);
+      nextDate.setDate(nextDate.getDate() + 1);
+
+      where.bookingDate = {
+        gte: bookingDate,
+        lt: nextDate,
+      };
+    }
+
+    const [total, bookings] = await this.prisma.$transaction([
+      this.prisma.booking.count({
+        where,
+      }),
+      this.prisma.booking.findMany({
+        where,
+        include: {
+          service: true,
+        },
+        skip,
+        take: limit,
+        orderBy: {
+          createdAt: sort,
+        },
+      }),
+    ]);
+
+    return {
+      data: bookings,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
       },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
+    };
   }
 
   // RETRIEVE ONE
