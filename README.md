@@ -177,8 +177,6 @@ BookEase
 - Booking Management
 - Services Management
 
-> _(Add screenshots after completing the frontend.)_
-
 ---
 
 # 📚 API Documentation
@@ -239,6 +237,16 @@ Protected API Routes
 
 ---
 
-# 👨‍💻 Author - github.com/UdeshaRashmi
+# 👨‍💻 Developer
+
+**P.M.Udesha Rashmi**
+
+Full-Stack Developer passionate about building scalable, secure, and user-friendly web applications using modern technologies.
+
+### Connect with Me
+
+- GitHub: https://github.com/UdeshaRashmi
+- LinkedIn: https://linkedin.com/in/udesha-rashmi-944894331
+- Email: udesha77722@gmail.com
 
 Developed as a modern full-stack booking management system using Next.js, NestJS, Prisma ORM, and PostgreSQL.
