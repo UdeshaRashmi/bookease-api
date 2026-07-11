@@ -76,6 +76,7 @@ export function ServiceForm({
           className="block text-sm font-medium text-slate-800"
         >
           Service title
+          <span className="text-red-600" aria-hidden="true"> *</span>
         </label>
 
         <input
@@ -98,6 +99,7 @@ export function ServiceForm({
           className="block text-sm font-medium text-slate-800"
         >
           Description
+          <span className="text-red-600" aria-hidden="true"> *</span>
         </label>
 
         <textarea
@@ -123,6 +125,7 @@ export function ServiceForm({
             className="block text-sm font-medium text-slate-800"
           >
             Duration in minutes
+            <span className="text-red-600" aria-hidden="true"> *</span>
           </label>
 
           <input
@@ -151,6 +154,7 @@ export function ServiceForm({
             className="block text-sm font-medium text-slate-800"
           >
             Price in LKR
+            <span className="text-red-600" aria-hidden="true"> *</span>
           </label>
 
           <input

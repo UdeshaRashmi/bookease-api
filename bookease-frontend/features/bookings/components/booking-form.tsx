@@ -149,6 +149,7 @@ export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
             className="text-sm font-medium text-foreground"
           >
             Full name
+            <span className="text-destructive" aria-hidden="true"> *</span>
           </label>
 
           <input
@@ -173,6 +174,7 @@ export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
             className="text-sm font-medium text-foreground"
           >
             Email address
+            <span className="text-destructive" aria-hidden="true"> *</span>
           </label>
 
           <input
@@ -197,6 +199,7 @@ export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
             className="text-sm font-medium text-foreground"
           >
             Phone number
+            <span className="text-destructive" aria-hidden="true"> *</span>
           </label>
 
           <input
@@ -221,6 +224,7 @@ export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
             className="text-sm font-medium text-foreground"
           >
             Service
+            <span className="text-destructive" aria-hidden="true"> *</span>
           </label>
 
           <select
@@ -261,6 +265,7 @@ export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
             className="text-sm font-medium text-foreground"
           >
             Booking date
+            <span className="text-destructive" aria-hidden="true"> *</span>
           </label>
 
           <input
@@ -285,6 +290,7 @@ export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
             className="text-sm font-medium text-foreground"
           >
             Booking time
+            <span className="text-destructive" aria-hidden="true"> *</span>
           </label>
 
           <input

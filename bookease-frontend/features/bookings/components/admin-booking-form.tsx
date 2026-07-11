@@ -101,6 +101,7 @@ export function AdminBookingForm({
           className="block text-sm font-medium text-slate-800"
         >
           Customer name
+          <span className="text-red-600" aria-hidden="true"> *</span>
         </label>
 
         <input
@@ -127,6 +128,7 @@ export function AdminBookingForm({
             className="block text-sm font-medium text-slate-800"
           >
             Customer email
+            <span className="text-red-600" aria-hidden="true"> *</span>
           </label>
 
           <input
@@ -152,6 +154,7 @@ export function AdminBookingForm({
             className="block text-sm font-medium text-slate-800"
           >
             Customer phone
+            <span className="text-red-600" aria-hidden="true"> *</span>
           </label>
 
           <input
@@ -178,6 +181,7 @@ export function AdminBookingForm({
           className="block text-sm font-medium text-slate-800"
         >
           Service
+          <span className="text-red-600" aria-hidden="true"> *</span>
         </label>
 
         <select
@@ -219,6 +223,7 @@ export function AdminBookingForm({
             className="block text-sm font-medium text-slate-800"
           >
             Booking date
+            <span className="text-red-600" aria-hidden="true"> *</span>
           </label>
 
           <input
@@ -244,6 +249,7 @@ export function AdminBookingForm({
             className="block text-sm font-medium text-slate-800"
           >
             Booking time
+            <span className="text-red-600" aria-hidden="true"> *</span>
           </label>
 
           <input

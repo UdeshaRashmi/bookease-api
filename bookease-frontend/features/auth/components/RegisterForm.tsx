@@ -100,6 +100,7 @@ export function RegisterForm() {
       <div className="space-y-2">
         <label htmlFor="name" className="text-sm font-medium">
           Full name
+          <span className="text-destructive" aria-hidden="true"> *</span>
         </label>
 
         <input
@@ -123,6 +124,7 @@ export function RegisterForm() {
       <div className="space-y-2">
         <label htmlFor="email" className="text-sm font-medium">
           Email address
+          <span className="text-destructive" aria-hidden="true"> *</span>
         </label>
 
         <input
@@ -146,6 +148,7 @@ export function RegisterForm() {
       <div className="space-y-2">
         <label htmlFor="password" className="text-sm font-medium">
           Password
+          <span className="text-destructive" aria-hidden="true"> *</span>
         </label>
 
         <div className="relative">
@@ -184,6 +187,7 @@ export function RegisterForm() {
       <div className="space-y-2">
         <label htmlFor="confirmPassword" className="text-sm font-medium">
           Confirm password
+          <span className="text-destructive" aria-hidden="true"> *</span>
         </label>
 
         <div className="relative">

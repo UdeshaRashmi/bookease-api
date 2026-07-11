@@ -1,5 +1,10 @@
 import { z } from 'zod';
 
+import {
+  sriLankanMobileNumberPattern,
+  startsEachWordWithCapital,
+} from '@/lib/validation';
+
 function getTodayDateString() {
   const today = new Date();
 
@@ -11,7 +16,14 @@ function getTodayDateString() {
 }
 
 export const bookingSchema = z.object({
-  customerName: z.string().trim().min(1, 'Customer name is required'),
+  customerName: z
+    .string()
+    .trim()
+    .min(1, 'Customer name is required')
+    .min(2, 'Customer name must contain at least 2 characters')
+    .refine(startsEachWordWithCapital, {
+      message: 'Each word in the customer name must start with a capital letter',
+    }),
 
   customerEmail: z
     .string()
@@ -19,7 +31,14 @@ export const bookingSchema = z.object({
     .min(1, 'Customer email is required')
     .email('Enter a valid email address'),
 
-  customerPhone: z.string().trim().min(1, 'Customer phone number is required'),
+  customerPhone: z
+    .string()
+    .trim()
+    .min(1, 'Customer phone number is required')
+    .regex(
+      sriLankanMobileNumberPattern,
+      'Enter a valid Sri Lankan mobile number, such as 0771234567',
+    ),
 
   serviceId: z.string().trim().min(1, 'Please select a service'),
 

@@ -1,5 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  Matches,
+  MinLength,
+} from 'class-validator';
+
+const titleCaseWordsPattern = /^[A-Z][A-Za-z]*(?:\s+[A-Z][A-Za-z]*)*$/;
 
 export class RegisterDto {
   @ApiProperty({
@@ -8,6 +16,9 @@ export class RegisterDto {
   })
   @IsString()
   @IsNotEmpty()
+  @Matches(titleCaseWordsPattern, {
+    message: 'name words must start with capital letters',
+  })
   name!: string;
 
   @ApiProperty({

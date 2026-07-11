@@ -6,8 +6,11 @@ import {
   IsOptional,
   IsPositive,
   IsString,
+  Matches,
   Min,
 } from 'class-validator';
+
+const titleCaseWordsPattern = /^[A-Z][A-Za-z]*(?:\s+[A-Z][A-Za-z]*)*$/;
 
 export class UpdateServiceDto {
   @ApiPropertyOptional({
@@ -16,6 +19,9 @@ export class UpdateServiceDto {
   })
   @IsOptional()
   @IsString()
+  @Matches(titleCaseWordsPattern, {
+    message: 'title words must start with capital letters',
+  })
   title?: string;
 
   @ApiPropertyOptional({

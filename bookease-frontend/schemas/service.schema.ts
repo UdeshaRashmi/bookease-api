@@ -1,11 +1,16 @@
 import { z } from 'zod';
 
+import { startsEachWordWithCapital } from '@/lib/validation';
+
 export const serviceSchema = z.object({
   title: z
     .string()
     .trim()
     .min(3, 'Service title must contain at least 3 characters.')
-    .max(100, 'Service title cannot exceed 100 characters.'),
+    .max(100, 'Service title cannot exceed 100 characters.')
+    .refine(startsEachWordWithCapital, {
+      message: 'Each word in the service title must start with a capital letter.',
+    }),
 
   description: z
     .string()

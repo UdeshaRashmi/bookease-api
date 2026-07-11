@@ -79,6 +79,7 @@ export function LoginForm() {
       <div className="space-y-2">
         <label htmlFor="email" className="text-sm font-medium">
           Email address
+          <span className="text-destructive" aria-hidden="true"> *</span>
         </label>
 
         <input
@@ -102,6 +103,7 @@ export function LoginForm() {
       <div className="space-y-2">
         <label htmlFor="password" className="text-sm font-medium">
           Password
+          <span className="text-destructive" aria-hidden="true"> *</span>
         </label>
 
         <div className="relative">

@@ -7,6 +7,9 @@ import {
   Matches,
 } from 'class-validator';
 
+const titleCaseWordsPattern = /^[A-Z][A-Za-z]*(?:\s+[A-Z][A-Za-z]*)*$/;
+const sriLankanMobileNumberPattern = /^(?:0|94|\+94)7\d{8}$/;
+
 export class UpdateBookingDto {
   @ApiPropertyOptional({
     description: 'Updated customer name',
@@ -14,6 +17,9 @@ export class UpdateBookingDto {
   })
   @IsOptional()
   @IsString()
+  @Matches(titleCaseWordsPattern, {
+    message: 'customerName words must start with capital letters',
+  })
   customerName?: string;
 
   @ApiPropertyOptional({
@@ -30,6 +36,9 @@ export class UpdateBookingDto {
   })
   @IsOptional()
   @IsString()
+  @Matches(sriLankanMobileNumberPattern, {
+    message: 'customerPhone must be a valid Sri Lankan mobile number',
+  })
   customerPhone?: string;
 
   @ApiPropertyOptional({
