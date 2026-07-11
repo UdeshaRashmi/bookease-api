@@ -98,7 +98,7 @@ export default function EditBookingPage() {
 
   if (isError || !booking || !initialValues) {
     return (
-      <div className="mx-auto max-w-3xl space-y-6">
+      <main className="mx-auto w-full max-w-3xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
         <Link
           href="/admin/bookings"
           className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition hover:text-slate-950"
@@ -121,12 +121,12 @@ export default function EditBookingPage() {
             </p>
           </div>
         </div>
-      </div>
+      </main>
     );
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6">
+    <main className="mx-auto w-full max-w-3xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
       <div>
         <Link
           href="/admin/bookings"
@@ -173,6 +173,6 @@ export default function EditBookingPage() {
         isSubmitting={updateBookingMutation.isPending}
         onSubmit={handleUpdateBooking}
       />
-    </div>
+    </main>
   );
 }

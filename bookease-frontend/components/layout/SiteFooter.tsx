@@ -63,7 +63,7 @@ export function SiteFooter() {
 
       <div className="border-t">
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-2 px-4 py-5 text-center text-sm text-muted-foreground sm:px-6 md:flex-row md:items-center md:justify-between md:text-left lg:px-8">
-          <p>© {currentYear} BookEase. All rights reserved.</p>
+          <p>Copyright {currentYear} BookEase. All rights reserved.</p>
           <p>Simple and reliable booking management.</p>
         </div>
       </div>

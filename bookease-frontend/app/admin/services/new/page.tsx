@@ -29,7 +29,7 @@ export default function NewServicePage() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6">
+    <main className="mx-auto w-full max-w-3xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
       <div>
         <Link
           href="/admin/services"
@@ -73,6 +73,6 @@ export default function NewServicePage() {
         isSubmitting={createServiceMutation.isPending}
         onSubmit={handleCreateService}
       />
-    </div>
+    </main>
   );
 }

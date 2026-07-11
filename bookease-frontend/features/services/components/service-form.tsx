@@ -67,7 +67,7 @@ export function ServiceForm({
   return (
     <form
       onSubmit={handleFormSubmit}
-      className="space-y-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm"
+      className="space-y-6 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6"
       noValidate
     >
       <div className="space-y-2">
@@ -205,7 +205,7 @@ export function ServiceForm({
         )}
       </div>
 
-      <div className="flex justify-end border-t border-slate-200 pt-6">
+      <div className="grid border-t border-slate-200 pt-6 sm:flex sm:justify-end">
         <button
           type="submit"
           disabled={isSubmitting}

@@ -78,8 +78,8 @@ export function BookingActionControls({
   }
 
   return (
-    <div className="min-w-44">
-      <div className="flex flex-wrap justify-end gap-2">
+    <div className="w-full min-w-0 sm:min-w-44">
+      <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-end">
         <button
           type="button"
           disabled={isProcessing || cannotCancel}
@@ -91,7 +91,7 @@ export function BookingActionControls({
                 ? "This booking is already cancelled"
                 : "Cancel booking"
           }
-          className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-amber-300 bg-amber-50 px-3 text-sm font-medium text-amber-700 transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-amber-300 bg-amber-50 px-2 text-sm font-medium text-amber-700 transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-50 sm:px-3"
         >
           {isCancelling ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -106,7 +106,7 @@ export function BookingActionControls({
           type="button"
           disabled={isProcessing}
           onClick={handleDeleteBooking}
-          className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-red-300 bg-red-50 px-3 text-sm font-medium text-red-700 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-red-300 bg-red-50 px-2 text-sm font-medium text-red-700 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50 sm:px-3"
         >
           {isDeleting ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -119,7 +119,7 @@ export function BookingActionControls({
       </div>
 
       {errorMessage && (
-        <p className="mt-2 text-right text-xs leading-5 text-red-600">
+        <p className="mt-2 text-left text-xs leading-5 text-red-600 sm:text-right">
           {errorMessage}
         </p>
       )}

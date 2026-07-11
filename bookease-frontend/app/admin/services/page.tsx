@@ -72,7 +72,7 @@ export default function AdminServicesPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <main className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">
@@ -86,7 +86,7 @@ export default function AdminServicesPage() {
 
         <Link
           href="/admin/services/new"
-          className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 text-sm font-medium text-white transition hover:bg-slate-700"
+          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 text-sm font-medium text-white transition hover:bg-slate-700 sm:w-auto"
         >
           <Plus className="h-4 w-4" />
           Add Service
@@ -170,7 +170,7 @@ export default function AdminServicesPage() {
 
         {!isLoading && !isError && filteredServices.length > 0 && (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-200 text-left">
+            <table className="hidden w-full min-w-200 text-left md:table">
               <thead className="bg-slate-50 text-xs font-semibold tracking-wide text-slate-600 uppercase">
                 <tr>
                   <th className="px-6 py-4">Service</th>
@@ -258,9 +258,86 @@ export default function AdminServicesPage() {
                 })}
               </tbody>
             </table>
+
+            <div className="divide-y divide-slate-200 md:hidden">
+              {filteredServices.map((service) => {
+                const isDeleting = deletingServiceId === service.id;
+
+                return (
+                  <article key={service.id} className="space-y-4 p-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <h2 className="break-words font-medium text-slate-900">
+                          {service.title}
+                        </h2>
+
+                        <p className="mt-1 line-clamp-3 text-sm leading-6 text-slate-500">
+                          {service.description}
+                        </p>
+                      </div>
+
+                      <span
+                        className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-medium ${
+                          service.isActive
+                            ? "bg-emerald-100 text-emerald-700"
+                            : "bg-slate-100 text-slate-600"
+                        }`}
+                      >
+                        {service.isActive ? "Active" : "Inactive"}
+                      </span>
+                    </div>
+
+                    <dl className="grid grid-cols-2 gap-3 text-sm">
+                      <div>
+                        <dt className="text-slate-500">Duration</dt>
+                        <dd className="mt-1 font-medium text-slate-900">
+                          {service.duration} minutes
+                        </dd>
+                      </div>
+
+                      <div>
+                        <dt className="text-slate-500">Price</dt>
+                        <dd className="mt-1 font-medium text-slate-900">
+                          LKR {service.price.toLocaleString()}
+                        </dd>
+                      </div>
+                    </dl>
+
+                    <div className="grid grid-cols-2 gap-2">
+                      <Link
+                        href={`/admin/services/${service.id}/edit`}
+                        className="inline-flex h-10 items-center justify-center rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+                      >
+                        Edit
+                      </Link>
+
+                      <button
+                        type="button"
+                        disabled={isDeleting}
+                        onClick={() =>
+                          handleDeleteService(
+                            service.id,
+                            service.title,
+                          )
+                        }
+                        className="inline-flex h-10 items-center justify-center gap-1.5 rounded-lg border border-red-200 bg-red-50 px-3 text-sm font-medium text-red-700 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        {isDeleting ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <Trash2 className="h-4 w-4" />
+                        )}
+
+                        {isDeleting ? "Deleting..." : "Delete"}
+                      </button>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>
-    </div>
+    </main>
   );
 }

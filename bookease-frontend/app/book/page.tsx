@@ -24,12 +24,12 @@ export default async function BookingPage({ searchParams }: BookingPageProps) {
   return (
     <main className="min-h-screen bg-background">
       <section className="border-b bg-muted/30">
-        <div className="mx-auto max-w-7xl px-6 py-14 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
             Book an appointment
           </p>
 
-          <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+          <h1 className="mt-4 max-w-3xl text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
             Reserve your service in a few simple steps.
           </h1>
 
@@ -40,8 +40,8 @@ export default async function BookingPage({ searchParams }: BookingPageProps) {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-8 px-6 py-12 lg:grid-cols-[1fr_1.5fr] lg:px-8">
-        <aside className="h-fit rounded-3xl border bg-muted/30 p-6 sm:p-8">
+      <section className="mx-auto grid max-w-7xl gap-6 px-4 py-10 sm:px-6 sm:py-12 lg:grid-cols-[1fr_1.5fr] lg:gap-8 lg:px-8">
+        <aside className="h-fit rounded-xl border bg-muted/30 p-5 sm:p-8">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
             <CalendarDays className="h-6 w-6" />
           </div>

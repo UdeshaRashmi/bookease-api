@@ -52,7 +52,7 @@ export default function HomePage() {
   return (
     <>
       <section className="border-b bg-gradient-to-b from-muted/50 to-background">
-        <div className="mx-auto grid w-full max-w-7xl gap-12 px-4 py-20 sm:px-6 md:py-28 lg:grid-cols-2 lg:items-center lg:px-8">
+        <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-14 sm:px-6 md:py-24 lg:grid-cols-2 lg:items-center lg:px-8">
           <div className="space-y-8">
             <div className="inline-flex items-center gap-2 rounded-full border bg-background px-4 py-2 text-sm text-muted-foreground shadow-sm">
               <CheckCircle2
@@ -63,7 +63,7 @@ export default function HomePage() {
             </div>
 
             <div className="space-y-5">
-              <h1 className="max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+              <h1 className="max-w-3xl text-3xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
                 Book the service you need with ease.
               </h1>
 
@@ -77,7 +77,7 @@ export default function HomePage() {
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/services"
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
+                className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 sm:w-auto"
               >
                 Explore Services
                 <ArrowRight className="size-4" aria-hidden="true" />
@@ -85,14 +85,14 @@ export default function HomePage() {
 
               <Link
                 href="/book"
-                className="inline-flex h-11 items-center justify-center rounded-md border bg-background px-6 text-sm font-medium shadow-sm transition-colors hover:bg-muted"
+                className="inline-flex h-11 w-full items-center justify-center rounded-md border bg-background px-6 text-sm font-medium shadow-sm transition-colors hover:bg-muted sm:w-auto"
               >
                 Book Now
               </Link>
             </div>
           </div>
 
-          <div className="rounded-2xl border bg-card p-6 shadow-sm sm:p-8">
+          <div className="rounded-xl border bg-card p-4 shadow-sm sm:p-8">
             <div className="space-y-6">
               <div className="flex items-center gap-3">
                 <div className="flex size-12 items-center justify-center rounded-xl bg-primary/10">
@@ -174,7 +174,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-20">
+      <section className="py-14 sm:py-20">
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto mb-12 max-w-2xl text-center">
             <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-primary">
@@ -216,7 +216,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-y bg-muted/40 py-20">
+      <section className="border-y bg-muted/40 py-14 sm:py-20">
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto mb-12 max-w-2xl text-center">
             <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-primary">
@@ -245,9 +245,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-20">
+      <section className="py-14 sm:py-20">
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-start justify-between gap-8 rounded-2xl bg-primary px-6 py-10 text-primary-foreground sm:px-10 md:flex-row md:items-center">
+          <div className="flex flex-col items-start justify-between gap-8 rounded-xl bg-primary px-5 py-8 text-primary-foreground sm:px-10 sm:py-10 md:flex-row md:items-center">
             <div>
               <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
                 Ready to make your booking?
@@ -261,7 +261,7 @@ export default function HomePage() {
 
             <Link
               href="/services"
-              className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-background px-6 text-sm font-medium text-foreground transition-colors hover:bg-background/90"
+              className="inline-flex h-11 w-full shrink-0 items-center justify-center gap-2 rounded-md bg-background px-6 text-sm font-medium text-foreground transition-colors hover:bg-background/90 sm:w-auto"
             >
               View Services
               <ArrowRight className="size-4" aria-hidden="true" />

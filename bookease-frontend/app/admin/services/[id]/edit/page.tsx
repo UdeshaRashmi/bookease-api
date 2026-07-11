@@ -78,7 +78,7 @@ export default function EditServicePage() {
 
   if (isError || !service || !initialValues) {
     return (
-      <div className="mx-auto max-w-3xl space-y-6">
+      <main className="mx-auto w-full max-w-3xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
         <Link
           href="/admin/services"
           className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition hover:text-slate-950"
@@ -101,12 +101,12 @@ export default function EditServicePage() {
             </p>
           </div>
         </div>
-      </div>
+      </main>
     );
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6">
+    <main className="mx-auto w-full max-w-3xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
       <div>
         <Link
           href="/admin/services"
@@ -153,6 +153,6 @@ export default function EditServicePage() {
         isSubmitting={updateServiceMutation.isPending}
         onSubmit={handleUpdateService}
       />
-    </div>
+    </main>
   );
 }

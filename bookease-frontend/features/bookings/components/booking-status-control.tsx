@@ -65,7 +65,7 @@ export function BookingStatusControl({
   }
 
   return (
-    <div className="min-w-40">
+    <div className="w-full min-w-0 sm:min-w-40">
       <div className="relative">
         <select
           aria-label="Booking status"

@@ -98,7 +98,7 @@ export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="rounded-3xl border bg-card p-6 shadow-sm sm:p-8"
+      className="rounded-xl border bg-card p-5 shadow-sm sm:p-8"
       noValidate
     >
       <div>
@@ -236,7 +236,7 @@ export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
 
             {activeServices.map((service) => (
               <option key={service.id} value={service.id}>
-                {service.title} — LKR {service.price.toLocaleString('en-LK')}
+                {service.title} - LKR {service.price.toLocaleString('en-LK')}
               </option>
             ))}
           </select>

@@ -122,7 +122,7 @@ export default function AdminDashboardPage() {
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-3">
+        <div className="grid gap-3 sm:flex sm:flex-wrap">
           <Link
             href="/admin/services/new"
             className="inline-flex h-10 items-center justify-center rounded-lg border border-slate-300 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
@@ -235,7 +235,7 @@ export default function AdminDashboardPage() {
                 </div>
               ) : (
                 <div className="overflow-x-auto">
-                  <table className="w-full min-w-175 text-left">
+                  <table className="hidden w-full min-w-175 text-left md:table">
                     <thead className="bg-slate-50 text-xs font-semibold tracking-wide text-slate-600 uppercase">
                       <tr>
                         <th className="px-5 py-4">Customer</th>
@@ -286,6 +286,47 @@ export default function AdminDashboardPage() {
                       ))}
                     </tbody>
                   </table>
+
+                  <div className="divide-y divide-slate-200 md:hidden">
+                    {recentBookings.map((booking) => (
+                      <article key={booking.id} className="space-y-3 p-4">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="min-w-0">
+                            <h3 className="break-words text-sm font-medium text-slate-900">
+                              {booking.customerName}
+                            </h3>
+
+                            <p className="mt-1 break-all text-sm text-slate-500">
+                              {booking.customerEmail}
+                            </p>
+                          </div>
+
+                          <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">
+                            {booking.status}
+                          </span>
+                        </div>
+
+                        <dl className="grid gap-3 text-sm min-[460px]:grid-cols-2">
+                          <div>
+                            <dt className="text-slate-500">Service</dt>
+                            <dd className="mt-1 break-words font-medium text-slate-900">
+                              {booking.service.title}
+                            </dd>
+                          </div>
+
+                          <div>
+                            <dt className="text-slate-500">Date & time</dt>
+                            <dd className="mt-1 font-medium text-slate-900">
+                              {formatBookingDate(booking.bookingDate)}
+                            </dd>
+                            <dd className="mt-1 text-slate-500">
+                              {booking.bookingTime}
+                            </dd>
+                          </div>
+                        </dl>
+                      </article>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>

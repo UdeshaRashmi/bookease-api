@@ -123,7 +123,7 @@ export default function AdminBookingsPage() {
     Boolean(appliedServiceId);
 
   return (
-    <div className="space-y-6">
+    <main className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-slate-900">
           Booking Management
@@ -242,7 +242,7 @@ export default function AdminBookingsPage() {
           </div>
         </div>
 
-        <div className="mt-4 flex flex-wrap justify-end gap-3">
+        <div className="mt-4 grid gap-3 sm:flex sm:flex-wrap sm:justify-end">
           <button
             type="button"
             onClick={handleClearFilters}
@@ -327,7 +327,7 @@ export default function AdminBookingsPage() {
         {!isLoading && !isError && bookings.length > 0 && (
           <>
             <div className="overflow-x-auto">
-              <table className="w-full min-w-375 text-left">
+              <table className="hidden w-full min-w-375 text-left lg:table">
                 <thead className="bg-slate-50 text-xs font-semibold tracking-wide text-slate-600 uppercase">
                   <tr>
                     <th className="px-5 py-4">Customer</th>
@@ -416,6 +416,83 @@ export default function AdminBookingsPage() {
                   ))}
                 </tbody>
               </table>
+
+              <div className="divide-y divide-slate-200 lg:hidden">
+                {bookings.map((booking) => (
+                  <article key={booking.id} className="space-y-4 p-4">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                      <div className="min-w-0">
+                        <h2 className="break-words font-medium text-slate-900">
+                          {booking.customerName}
+                        </h2>
+
+                        <p className="mt-1 break-all text-sm text-slate-500">
+                          {booking.customerEmail}
+                        </p>
+
+                        <p className="mt-1 text-sm text-slate-500">
+                          {booking.customerPhone}
+                        </p>
+                      </div>
+
+                      <BookingStatusControl
+                        bookingId={booking.id}
+                        currentStatus={booking.status}
+                      />
+                    </div>
+
+                    <dl className="grid gap-3 text-sm min-[480px]:grid-cols-2">
+                      <div>
+                        <dt className="text-slate-500">Service</dt>
+                        <dd className="mt-1 break-words font-medium text-slate-900">
+                          {booking.service.title}
+                        </dd>
+                        <dd className="mt-1 text-slate-500">
+                          LKR{" "}
+                          {booking.service.price.toLocaleString(
+                            "en-LK",
+                          )}
+                        </dd>
+                      </div>
+
+                      <div>
+                        <dt className="text-slate-500">Date & time</dt>
+                        <dd className="mt-1 font-medium text-slate-900">
+                          {formatBookingDate(booking.bookingDate)}
+                        </dd>
+                        <dd className="mt-1 text-slate-500">
+                          {booking.bookingTime}
+                        </dd>
+                      </div>
+
+                      <div>
+                        <dt className="text-slate-500">Created</dt>
+                        <dd className="mt-1 font-medium text-slate-900">
+                          {formatBookingDate(booking.createdAt)}
+                        </dd>
+                      </div>
+                    </dl>
+
+                    <div className="grid gap-2 sm:grid-cols-[auto_1fr] sm:items-start">
+                      <Link
+                        href={`/admin/bookings/${booking.id}/edit`}
+                        className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 hover:text-slate-950"
+                      >
+                        <Pencil className="h-4 w-4" />
+                        Edit
+                      </Link>
+
+                      <div className="sm:justify-self-end">
+                        <BookingActionControls
+                          bookingId={booking.id}
+                          customerName={booking.customerName}
+                          currentStatus={booking.status}
+                        />
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
             </div>
 
             {meta && meta.totalPages > 1 && (
@@ -424,7 +501,7 @@ export default function AdminBookingsPage() {
                   Page {meta.page} of {meta.totalPages}
                 </p>
 
-                <div className="flex items-center gap-2">
+                <div className="grid grid-cols-2 gap-2 sm:flex sm:items-center">
                   <button
                     type="button"
                     disabled={page <= 1 || isFetching}
@@ -463,6 +540,6 @@ export default function AdminBookingsPage() {
           </>
         )}
       </div>
-    </div>
+    </main>
   );
 }

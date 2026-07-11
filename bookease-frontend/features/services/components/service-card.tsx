@@ -9,7 +9,7 @@ interface ServiceCardProps {
 
 export function ServiceCard({ service }: ServiceCardProps) {
   return (
-    <article className="group flex h-full flex-col rounded-2xl border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+    <article className="group flex h-full min-w-0 flex-col rounded-xl border bg-card p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md sm:p-6">
       <div className="mb-5 flex items-start justify-between gap-4">
         <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
           <Clock className="h-5 w-5" />
@@ -34,7 +34,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
         {service.description}
       </p>
 
-      <div className="mt-6 flex items-center justify-between border-t pt-5">
+      <div className="mt-6 grid gap-4 border-t pt-5 min-[420px]:grid-cols-2 min-[420px]:items-center">
         <div>
           <p className="text-xs text-muted-foreground">Starting from</p>
 
@@ -43,7 +43,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
           </p>
         </div>
 
-        <div className="text-right">
+        <div className="min-[420px]:text-right">
           <p className="text-xs text-muted-foreground">Duration</p>
 
           <p className="mt-1 text-sm font-medium text-foreground">

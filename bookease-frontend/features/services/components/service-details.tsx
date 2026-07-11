@@ -29,10 +29,10 @@ export function ServiceDetails({ serviceId }: ServiceDetailsProps) {
   if (isLoading) {
     return (
       <main className="min-h-screen bg-background">
-        <section className="mx-auto max-w-5xl px-6 py-12 lg:px-8">
+        <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
           <div className="h-6 w-36 animate-pulse rounded-md bg-muted" />
 
-          <div className="mt-8 animate-pulse rounded-3xl border bg-card p-8 sm:p-10">
+          <div className="mt-8 animate-pulse rounded-xl border bg-card p-5 sm:p-10">
             <div className="h-6 w-28 rounded-full bg-muted" />
             <div className="mt-6 h-12 max-w-xl rounded-lg bg-muted" />
             <div className="mt-5 h-24 rounded-lg bg-muted" />
@@ -50,7 +50,7 @@ export function ServiceDetails({ serviceId }: ServiceDetailsProps) {
   if (isError || !service) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-background px-6">
-        <section className="w-full max-w-xl rounded-3xl border border-destructive/30 bg-destructive/5 p-8 text-center">
+        <section className="w-full max-w-xl rounded-xl border border-destructive/30 bg-destructive/5 p-6 text-center sm:p-8">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-destructive/10 text-destructive">
             <AlertCircle className="h-6 w-6" />
           </div>
@@ -93,7 +93,7 @@ export function ServiceDetails({ serviceId }: ServiceDetailsProps) {
 
   return (
     <main className="min-h-screen bg-background">
-      <section className="mx-auto max-w-5xl px-6 py-12 lg:px-8">
+      <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
         <Link
           href="/services"
           className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
@@ -102,8 +102,8 @@ export function ServiceDetails({ serviceId }: ServiceDetailsProps) {
           Back to services
         </Link>
 
-        <article className="mt-8 overflow-hidden rounded-3xl border bg-card shadow-sm">
-          <div className="border-b bg-muted/30 p-8 sm:p-10">
+        <article className="mt-8 overflow-hidden rounded-xl border bg-card shadow-sm">
+          <div className="border-b bg-muted/30 p-5 sm:p-10">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
                 Service details
@@ -120,7 +120,7 @@ export function ServiceDetails({ serviceId }: ServiceDetailsProps) {
               </span>
             </div>
 
-            <h1 className="mt-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+            <h1 className="mt-6 break-words text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
               {service.title}
             </h1>
 
@@ -129,7 +129,7 @@ export function ServiceDetails({ serviceId }: ServiceDetailsProps) {
             </p>
           </div>
 
-          <div className="p-8 sm:p-10">
+          <div className="p-5 sm:p-10">
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="rounded-2xl border bg-background p-6">
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
@@ -182,12 +182,12 @@ export function ServiceDetails({ serviceId }: ServiceDetailsProps) {
                 {service.isActive ? (
                   <Link
                     href={`/book?serviceId=${service.id}`}
-                    className="inline-flex h-11 shrink-0 items-center justify-center rounded-xl bg-primary px-6 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                    className="inline-flex h-11 w-full shrink-0 items-center justify-center rounded-xl bg-primary px-6 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 sm:w-auto"
                   >
                     Book this service
                   </Link>
                 ) : (
-                  <span className="inline-flex h-11 shrink-0 items-center justify-center rounded-xl bg-muted px-6 text-sm font-medium text-muted-foreground">
+                  <span className="inline-flex h-11 w-full shrink-0 items-center justify-center rounded-xl bg-muted px-6 text-sm font-medium text-muted-foreground sm:w-auto">
                     Service unavailable
                   </span>
                 )}

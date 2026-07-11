@@ -121,10 +121,22 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
   html {
     @apply font-sans;
+  }
+  body {
+    @apply min-w-0 bg-background text-foreground antialiased;
+  }
+  img,
+  svg,
+  video,
+  canvas {
+    @apply max-w-full;
+  }
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
   }
 }
