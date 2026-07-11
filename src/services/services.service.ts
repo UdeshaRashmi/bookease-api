@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { capitalizeWords } from '../common/utils/text-format';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 
@@ -9,7 +10,10 @@ export class ServicesService {
 
   async create(createServiceDto: CreateServiceDto) {
     return this.prisma.service.create({
-      data: createServiceDto,
+      data: {
+        ...createServiceDto,
+        title: capitalizeWords(createServiceDto.title.trim()),
+      },
     });
   }
 
@@ -38,7 +42,12 @@ export class ServicesService {
 
     return this.prisma.service.update({
       where: { id },
-      data: updateServiceDto,
+      data: {
+        ...updateServiceDto,
+        title: updateServiceDto.title
+          ? capitalizeWords(updateServiceDto.title.trim())
+          : undefined,
+      },
     });
   }
 

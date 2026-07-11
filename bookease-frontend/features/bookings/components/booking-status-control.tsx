@@ -91,7 +91,7 @@ export function BookingStatusControl({
       </div>
 
       {errorMessage && (
-        <p className="mt-2 flex items-center gap-1 text-xs text-red-600">
+        <p className="mt-2 flex items-center gap-1 break-words text-xs text-red-600">
           <AlertCircle className="h-3.5 w-3.5 shrink-0" />
           {errorMessage}
         </p>

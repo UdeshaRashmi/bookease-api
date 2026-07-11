@@ -69,7 +69,7 @@ export function AdminHeader() {
           </nav>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center">
+        <div className="grid gap-2 min-[480px]:grid-cols-2 sm:flex sm:flex-wrap sm:items-center">
           <AdminDateTime />
 
           <LogoutButton />

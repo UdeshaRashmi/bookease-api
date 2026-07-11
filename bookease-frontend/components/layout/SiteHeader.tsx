@@ -21,6 +21,10 @@ const navigationLinks = [
     href: '/services',
   },
   {
+    label: 'About',
+    href: '/about',
+  },
+  {
     label: 'Book Now',
     href: '/book',
   },
@@ -84,7 +88,7 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <Link
             href={userHref}
             className="inline-flex h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-3 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50 hover:text-slate-950 sm:px-4"
@@ -121,20 +125,6 @@ export function SiteHeader() {
               </Link>
             );
           })}
-
-          <Link
-            href={userHref}
-            className="shrink-0 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-950"
-          >
-            User
-          </Link>
-
-          <Link
-            href={adminHref}
-            className="shrink-0 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-950"
-          >
-            Admin
-          </Link>
         </nav>
       </div>
     </header>

@@ -87,6 +87,12 @@ export function ServiceForm({
           placeholder="Example: Hair Consultation"
           disabled={isSubmitting}
           {...register("title", {
+            onChange: (event) => {
+              setValue("title", capitalizeWords(event.target.value), {
+                shouldDirty: true,
+                shouldValidate: true,
+              });
+            },
             onBlur: (event) => {
               setValue("title", capitalizeWords(event.target.value), {
                 shouldValidate: true,

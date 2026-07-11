@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import {
   sriLankanMobileNumberPattern,
-  startsEachWordWithCapital,
+  capitalizeWords,
 } from '@/lib/validation';
 
 function getTodayDateString() {
@@ -21,9 +21,7 @@ export const bookingSchema = z.object({
     .trim()
     .min(1, 'Customer name is required')
     .min(2, 'Customer name must contain at least 2 characters')
-    .refine(startsEachWordWithCapital, {
-      message: 'Each word in the customer name must start with a capital letter',
-    }),
+    .transform(capitalizeWords),
 
   customerEmail: z
     .string()

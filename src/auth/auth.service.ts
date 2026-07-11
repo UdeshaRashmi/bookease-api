@@ -6,6 +6,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { UserRole } from '../../generated/prisma/client';
 import { UsersService } from '../users/users.service';
+import { capitalizeWords } from '../common/utils/text-format';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
@@ -28,7 +29,12 @@ export class AuthService {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    return this.usersService.create(name, email, hashedPassword, role);
+    return this.usersService.create(
+      capitalizeWords(name.trim()),
+      email,
+      hashedPassword,
+      role,
+    );
   }
 
   registerAdmin(registerDto: RegisterDto) {

@@ -13,6 +13,10 @@ const footerLinks = [
     href: '/services',
   },
   {
+    label: 'About',
+    href: '/about',
+  },
+  {
     label: 'Book Now',
     href: '/book',
   },

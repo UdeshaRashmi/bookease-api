@@ -63,6 +63,7 @@ export function RegisterForm({
   const loginMutation = useLogin();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [formError, setFormError] = useState('');
 
   const {
     register,
@@ -77,6 +78,7 @@ export function RegisterForm({
       password: '',
       confirmPassword: '',
     },
+    mode: 'onChange',
   });
 
   const isSubmitting = registerMutation.isPending || loginMutation.isPending;
@@ -91,25 +93,33 @@ export function RegisterForm({
 
     registerMutation.reset();
     loginMutation.reset();
+    setFormError('');
 
-    await registerMutation.mutateAsync(accountDetails);
+    try {
+      await registerMutation.mutateAsync(accountDetails);
 
-    const loginResponse = await loginMutation.mutateAsync({
-      email: values.email,
-      password: values.password,
-    });
+      const loginResponse = await loginMutation.mutateAsync({
+        email: values.email,
+        password: values.password,
+      });
 
-    if (loginResponse.data.user.role !== requiredRole) {
-      throw new Error('Created account role did not match the requested flow.');
+      if (loginResponse.data.user.role !== requiredRole) {
+        setFormError(
+          'Created account role did not match the requested sign up flow.',
+        );
+        return;
+      }
+
+      saveAuthSession(
+        loginResponse.data.access_token,
+        loginResponse.data.user,
+      );
+
+      router.replace(redirectPath);
+      router.refresh();
+    } catch {
+      // React Query stores the error; the form renders it below.
     }
-
-    saveAuthSession(
-      loginResponse.data.access_token,
-      loginResponse.data.user,
-    );
-
-    router.replace(redirectPath);
-    router.refresh();
   };
 
   return (
@@ -129,6 +139,12 @@ export function RegisterForm({
           aria-describedby={errors.name ? 'name-error' : undefined}
           className="h-11 w-full rounded-md border bg-background px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
           {...register('name', {
+            onChange: (event) => {
+              setValue('name', capitalizeWords(event.target.value), {
+                shouldDirty: true,
+                shouldValidate: true,
+              });
+            },
             onBlur: (event) => {
               setValue('name', capitalizeWords(event.target.value), {
                 shouldValidate: true,
@@ -253,12 +269,12 @@ export function RegisterForm({
         )}
       </div>
 
-      {authError && (
+      {(authError || formError) && (
         <div
           role="alert"
           className="rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive"
         >
-          {getAuthErrorMessage(authError)}
+          {formError || getAuthErrorMessage(authError)}
         </div>
       )}
 

@@ -1,4 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsBoolean,
   IsInt,
@@ -7,11 +8,9 @@ import {
   IsOptional,
   IsPositive,
   IsString,
-  Matches,
   Min,
 } from 'class-validator';
-
-const titleCaseWordsPattern = /^[A-Z][A-Za-z]*(?:\s+[A-Z][A-Za-z]*)*$/;
+import { capitalizeWords } from '../../common/utils/text-format';
 
 export class CreateServiceDto {
   @ApiProperty({
@@ -20,9 +19,9 @@ export class CreateServiceDto {
   })
   @IsString()
   @IsNotEmpty()
-  @Matches(titleCaseWordsPattern, {
-    message: 'title words must start with capital letters',
-  })
+  @Transform(({ value }) =>
+    typeof value === 'string' ? capitalizeWords(value.trim()) : value,
+  )
   title!: string;
 
   @ApiProperty({

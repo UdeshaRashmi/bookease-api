@@ -16,7 +16,7 @@ export function BrandLogo({ compact = false }: BrandLogoProps) {
       </span>
 
       {!compact && (
-        <span className="min-w-0">
+        <span className="min-w-0 max-[360px]:hidden">
           <span className="block text-xl font-bold tracking-tight text-slate-950">
             BookEase
           </span>

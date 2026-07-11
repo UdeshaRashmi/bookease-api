@@ -8,6 +8,7 @@ import {
   XCircle,
 } from "lucide-react";
 import Link from "next/link";
+import { useSyncExternalStore } from "react";
 
 import { getAuthUser } from "@/features/auth/lib/auth-storage";
 import { LogoutButton } from "@/features/auth/components/LogoutButton";
@@ -15,6 +16,7 @@ import {
   useCancelMyBooking,
   useMyBookings,
 } from "@/features/bookings/hooks/use-my-bookings";
+import { useState } from "react";
 
 function formatBookingDate(dateValue: string) {
   const date = new Date(dateValue);
@@ -30,8 +32,23 @@ function formatBookingDate(dateValue: string) {
   });
 }
 
+function getAuthNameSnapshot() {
+  return getAuthUser()?.name ?? "";
+}
+
 export default function AccountDashboardPage() {
-  const user = getAuthUser();
+  const [cancelError, setCancelError] = useState("");
+  const userName = useSyncExternalStore(
+    (onStoreChange) => {
+      window.addEventListener("storage", onStoreChange);
+
+      return () => {
+        window.removeEventListener("storage", onStoreChange);
+      };
+    },
+    getAuthNameSnapshot,
+    () => "",
+  );
   const {
     data: bookingResult,
     isLoading,
@@ -55,7 +72,15 @@ export default function AccountDashboardPage() {
       return;
     }
 
-    await cancelBookingMutation.mutateAsync(bookingId);
+    setCancelError("");
+
+    try {
+      await cancelBookingMutation.mutateAsync(bookingId);
+    } catch {
+      setCancelError(
+        "Unable to cancel this booking. Completed or already cancelled bookings cannot be cancelled.",
+      );
+    }
   }
 
   return (
@@ -67,8 +92,8 @@ export default function AccountDashboardPage() {
 
         <div className="mt-3 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">
-              Welcome{user?.name ? `, ${user.name}` : ""}
+            <h1 className="break-words text-3xl font-bold tracking-tight">
+              Welcome{userName ? `, ${userName}` : ""}
             </h1>
 
             <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
@@ -77,7 +102,7 @@ export default function AccountDashboardPage() {
             </p>
           </div>
 
-          <div className="grid gap-2 sm:flex">
+          <div className="grid gap-2 sm:flex sm:flex-wrap">
             <Link
               href="/book"
               className="inline-flex h-11 items-center justify-center rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
@@ -126,6 +151,12 @@ export default function AccountDashboardPage() {
                 Please refresh the page or sign in again.
               </p>
             </div>
+          </div>
+        )}
+
+        {cancelError && (
+          <div className="border-b border-destructive/20 bg-destructive/5 px-5 py-4 text-sm text-destructive">
+            {cancelError}
           </div>
         )}
 

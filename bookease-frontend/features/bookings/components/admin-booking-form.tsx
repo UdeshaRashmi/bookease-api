@@ -55,7 +55,7 @@ export function AdminBookingForm({
   } = useForm<BookingFormValues>({
     resolver: zodResolver(bookingSchema),
     defaultValues: initialValues,
-    mode: "onBlur",
+    mode: "onChange",
   });
 
   useEffect(() => {
@@ -113,6 +113,16 @@ export function AdminBookingForm({
           disabled={isSubmitting}
           aria-invalid={Boolean(errors.customerName)}
           {...register("customerName", {
+            onChange: (event) => {
+              setValue(
+                "customerName",
+                capitalizeWords(event.target.value),
+                {
+                  shouldDirty: true,
+                  shouldValidate: true,
+                },
+              );
+            },
             onBlur: (event) => {
               setValue(
                 "customerName",

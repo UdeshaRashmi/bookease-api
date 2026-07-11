@@ -79,7 +79,7 @@ export function BookingActionControls({
 
   return (
     <div className="w-full min-w-0 sm:min-w-44">
-      <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-end">
+      <div className="grid gap-2 min-[420px]:grid-cols-2 sm:flex sm:flex-wrap sm:justify-end">
         <button
           type="button"
           disabled={isProcessing || cannotCancel}

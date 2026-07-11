@@ -1,4 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsDateString,
   IsEmail,
@@ -7,8 +8,8 @@ import {
   IsString,
   Matches,
 } from 'class-validator';
+import { capitalizeWords } from '../../common/utils/text-format';
 
-const titleCaseWordsPattern = /^[A-Z][A-Za-z]*(?:\s+[A-Z][A-Za-z]*)*$/;
 const sriLankanMobileNumberPattern = /^(?:0|94|\+94)7\d{8}$/;
 
 export class ReplaceBookingDto {
@@ -18,9 +19,9 @@ export class ReplaceBookingDto {
   })
   @IsString()
   @IsNotEmpty()
-  @Matches(titleCaseWordsPattern, {
-    message: 'customerName words must start with capital letters',
-  })
+  @Transform(({ value }) =>
+    typeof value === 'string' ? capitalizeWords(value.trim()) : value,
+  )
   customerName!: string;
 
   @ApiProperty({

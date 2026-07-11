@@ -262,8 +262,8 @@ export default function AdminBookingsPage() {
       </form>
 
       <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-        <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
-          <div>
+        <div className="flex items-center justify-between gap-3 border-b border-slate-200 px-5 py-4">
+          <div className="min-w-0">
             <p className="font-medium text-slate-900">
               Customer bookings
             </p>
@@ -327,7 +327,7 @@ export default function AdminBookingsPage() {
         {!isLoading && !isError && bookings.length > 0 && (
           <>
             <div className="overflow-x-auto">
-              <table className="hidden w-full min-w-375 text-left lg:table">
+              <table className="hidden w-full min-w-[68rem] text-left lg:table">
                 <thead className="bg-slate-50 text-xs font-semibold tracking-wide text-slate-600 uppercase">
                   <tr>
                     <th className="px-5 py-4">Customer</th>
@@ -473,7 +473,7 @@ export default function AdminBookingsPage() {
                       </div>
                     </dl>
 
-                    <div className="grid gap-2 sm:grid-cols-[auto_1fr] sm:items-start">
+                    <div className="grid gap-2 min-[420px]:grid-cols-2 sm:grid-cols-[auto_1fr] sm:items-start">
                       <Link
                         href={`/admin/bookings/${booking.id}/edit`}
                         className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 hover:text-slate-950"

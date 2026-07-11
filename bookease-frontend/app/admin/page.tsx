@@ -125,14 +125,14 @@ export default function AdminDashboardPage() {
         <div className="grid gap-3 sm:flex sm:flex-wrap">
           <Link
             href="/admin/services/new"
-            className="inline-flex h-10 items-center justify-center rounded-lg border border-slate-300 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+            className="inline-flex h-10 w-full items-center justify-center rounded-lg border border-slate-300 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50 sm:w-auto"
           >
             Add Service
           </Link>
 
           <Link
             href="/admin/bookings"
-            className="inline-flex h-10 items-center justify-center rounded-lg bg-slate-900 px-4 text-sm font-medium text-white transition hover:bg-slate-700"
+            className="inline-flex h-10 w-full items-center justify-center rounded-lg bg-slate-900 px-4 text-sm font-medium text-white transition hover:bg-slate-700 sm:w-auto"
           >
             Manage Bookings
           </Link>
@@ -235,7 +235,7 @@ export default function AdminDashboardPage() {
                 </div>
               ) : (
                 <div className="overflow-x-auto">
-                  <table className="hidden w-full min-w-175 text-left md:table">
+                  <table className="hidden w-full min-w-[44rem] text-left md:table">
                     <thead className="bg-slate-50 text-xs font-semibold tracking-wide text-slate-600 uppercase">
                       <tr>
                         <th className="px-5 py-4">Customer</th>

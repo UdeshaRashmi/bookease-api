@@ -74,7 +74,7 @@ export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
       bookingTime: '',
       notes: '',
     },
-    mode: 'onBlur',
+    mode: 'onChange',
   });
 
   async function onSubmit(values: BookingFormValues) {
@@ -160,6 +160,16 @@ export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
             placeholder="Rashmi Paranamana"
             aria-invalid={Boolean(errors.customerName)}
             {...register('customerName', {
+              onChange: (event) => {
+                setValue(
+                  'customerName',
+                  capitalizeWords(event.target.value),
+                  {
+                    shouldDirty: true,
+                    shouldValidate: true,
+                  },
+                );
+              },
               onBlur: (event) => {
                 setValue(
                   'customerName',

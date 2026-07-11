@@ -170,7 +170,7 @@ export default function AdminServicesPage() {
 
         {!isLoading && !isError && filteredServices.length > 0 && (
           <div className="overflow-x-auto">
-            <table className="hidden w-full min-w-200 text-left md:table">
+            <table className="hidden w-full min-w-[50rem] text-left md:table">
               <thead className="bg-slate-50 text-xs font-semibold tracking-wide text-slate-600 uppercase">
                 <tr>
                   <th className="px-6 py-4">Service</th>
@@ -287,7 +287,7 @@ export default function AdminServicesPage() {
                       </span>
                     </div>
 
-                    <dl className="grid grid-cols-2 gap-3 text-sm">
+                    <dl className="grid gap-3 text-sm min-[420px]:grid-cols-2">
                       <div>
                         <dt className="text-slate-500">Duration</dt>
                         <dd className="mt-1 font-medium text-slate-900">
@@ -303,7 +303,7 @@ export default function AdminServicesPage() {
                       </div>
                     </dl>
 
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid gap-2 min-[420px]:grid-cols-2">
                       <Link
                         href={`/admin/services/${service.id}/edit`}
                         className="inline-flex h-10 items-center justify-center rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"

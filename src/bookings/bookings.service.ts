@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { BookingStatus, Prisma } from '../../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { capitalizeWords } from '../common/utils/text-format';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import {
   BookingSortOrder,
@@ -116,7 +117,7 @@ export class BookingsService {
 
     return this.prisma.booking.create({
       data: {
-        customerName,
+        customerName: capitalizeWords(customerName.trim()),
         customerEmail,
         customerPhone,
         serviceId,
@@ -299,7 +300,7 @@ export class BookingsService {
         id,
       },
       data: {
-        customerName,
+        customerName: capitalizeWords(customerName.trim()),
         customerEmail,
         customerPhone,
         serviceId,
@@ -342,7 +343,9 @@ export class BookingsService {
         id,
       },
       data: {
-        customerName: updateBookingDto.customerName,
+        customerName: updateBookingDto.customerName
+          ? capitalizeWords(updateBookingDto.customerName.trim())
+          : undefined,
         customerEmail: updateBookingDto.customerEmail,
         customerPhone: updateBookingDto.customerPhone,
         serviceId: updateBookingDto.serviceId,

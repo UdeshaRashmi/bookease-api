@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { startsEachWordWithCapital } from '@/lib/validation';
+import { capitalizeWords } from '@/lib/validation';
 
 export const registerSchema = z
   .object({
@@ -9,9 +9,7 @@ export const registerSchema = z
       .trim()
       .min(1, 'Full name is required.')
       .min(2, 'Full name must contain at least 2 characters.')
-      .refine(startsEachWordWithCapital, {
-        message: 'Each word in your full name must start with a capital letter.',
-      }),
+      .transform(capitalizeWords),
 
     email: z
       .string()
