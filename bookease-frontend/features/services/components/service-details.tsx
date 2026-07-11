@@ -161,21 +161,36 @@ export function ServiceDetails({ serviceId }: ServiceDetailsProps) {
             </div>
 
             <div className="mt-8 rounded-2xl border bg-muted/30 p-6">
-              <div className="flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                  <CalendarCheck className="h-5 w-5" />
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <CalendarCheck className="h-5 w-5" />
+                  </div>
+
+                  <div>
+                    <h2 className="font-semibold text-foreground">
+                      Ready to make a booking?
+                    </h2>
+
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                      Continue to the booking form with this service already
+                      selected.
+                    </p>
+                  </div>
                 </div>
 
-                <div>
-                  <h2 className="font-semibold text-foreground">
-                    Ready to make a booking?
-                  </h2>
-
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    The booking form will allow customers to choose a date, time
-                    and provide their contact details.
-                  </p>
-                </div>
+                {service.isActive ? (
+                  <Link
+                    href={`/book?serviceId=${service.id}`}
+                    className="inline-flex h-11 shrink-0 items-center justify-center rounded-xl bg-primary px-6 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                  >
+                    Book this service
+                  </Link>
+                ) : (
+                  <span className="inline-flex h-11 shrink-0 items-center justify-center rounded-xl bg-muted px-6 text-sm font-medium text-muted-foreground">
+                    Service unavailable
+                  </span>
+                )}
               </div>
             </div>
           </div>

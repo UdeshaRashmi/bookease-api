@@ -8,7 +8,19 @@ export const metadata: Metadata = {
   description: 'Choose a service, date, and time to create your booking.',
 };
 
-export default function BookingPage() {
+interface BookingPageProps {
+  searchParams: Promise<{
+    serviceId?: string | string[];
+  }>;
+}
+
+export default async function BookingPage({ searchParams }: BookingPageProps) {
+  const { serviceId } = await searchParams;
+
+  const selectedServiceId = Array.isArray(serviceId)
+    ? (serviceId[0] ?? '')
+    : (serviceId ?? '');
+
   return (
     <main className="min-h-screen bg-background">
       <section className="border-b bg-muted/30">
@@ -88,7 +100,7 @@ export default function BookingPage() {
           </div>
         </aside>
 
-        <BookingForm />
+        <BookingForm defaultServiceId={selectedServiceId} />
       </section>
     </main>
   );

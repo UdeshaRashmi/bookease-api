@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
+import { SiteHeader } from '@/components/layout/site-header';
 import { QueryProvider } from '@/providers/query-provider';
 
 import './globals.css';
@@ -16,7 +17,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'BookEase',
+  title: {
+    default: 'BookEase',
+    template: '%s | BookEase',
+  },
   description: 'A modern booking management system',
 };
 
@@ -30,7 +34,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <SiteHeader />
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );
