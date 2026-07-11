@@ -2,9 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useSyncExternalStore } from 'react';
 
 import { BrandLogo } from '@/components/layout/BrandLogo';
 import { getAuthUser } from '@/features/auth/lib/auth-storage';
+
+function getAuthRoleSnapshot() {
+  return getAuthUser()?.role ?? null;
+}
 
 const navigationLinks = [
   {
@@ -23,9 +28,19 @@ const navigationLinks = [
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const user = getAuthUser();
-  const userHref = user?.role === 'USER' ? '/account' : '/user';
-  const adminHref = user?.role === 'ADMIN' ? '/admin' : '/login';
+  const userRole = useSyncExternalStore(
+    (onStoreChange) => {
+      window.addEventListener('storage', onStoreChange);
+
+      return () => {
+        window.removeEventListener('storage', onStoreChange);
+      };
+    },
+    getAuthRoleSnapshot,
+    () => null,
+  );
+  const userHref = userRole === 'USER' ? '/account' : '/user';
+  const adminHref = userRole === 'ADMIN' ? '/admin' : '/login';
 
   function isActiveLink(href: string) {
     if (href === '/') {
@@ -36,20 +51,14 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur">
-      <div className="mx-auto flex min-h-16 max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 shadow-[0_1px_0_rgba(15,23,42,0.03)] backdrop-blur-xl">
+      <div className="mx-auto flex min-h-18 max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="flex items-center gap-3"
+          className="min-w-0"
           aria-label="Go to BookEase home page"
         >
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-            <CalendarCheck2 className="h-5 w-5" />
-          </span>
-
-          <span className="text-xl font-bold tracking-tight text-foreground">
-            BookEase
-          </span>
+          <BrandLogo />
         </Link>
 
         <nav
@@ -65,8 +74,8 @@ export function SiteHeader() {
                 href={link.href}
                 className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                   isActive
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                    ? 'bg-teal-50 text-teal-700'
+                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950'
                 }`}
               >
                 {link.label}
@@ -78,14 +87,14 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <Link
             href={userHref}
-            className="inline-flex h-10 items-center justify-center rounded-xl border bg-background px-3 text-sm font-medium text-foreground transition-colors hover:bg-muted sm:px-4"
+            className="inline-flex h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-3 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50 hover:text-slate-950 sm:px-4"
           >
             User
           </Link>
 
           <Link
             href={adminHref}
-            className="inline-flex h-10 items-center justify-center rounded-xl bg-primary px-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:px-4"
+            className="inline-flex h-10 items-center justify-center rounded-xl bg-slate-950 px-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-slate-800 sm:px-4"
           >
             Admin
           </Link>
@@ -104,8 +113,8 @@ export function SiteHeader() {
                 href={link.href}
                 className={`shrink-0 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                   isActive
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                    ? 'bg-teal-50 text-teal-700'
+                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950'
                 }`}
               >
                 {link.label}
@@ -115,14 +124,14 @@ export function SiteHeader() {
 
           <Link
             href={userHref}
-            className="shrink-0 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            className="shrink-0 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-950"
           >
             User
           </Link>
 
           <Link
             href={adminHref}
-            className="shrink-0 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            className="shrink-0 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-950"
           >
             Admin
           </Link>
