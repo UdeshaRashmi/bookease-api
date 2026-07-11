@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { getAccessToken } from '@/features/auth/lib/auth-storage';
+
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL;
 
 if (!apiBaseUrl) {
@@ -15,3 +17,18 @@ export const apiClient = axios.create({
   },
   timeout: 10000,
 });
+
+apiClient.interceptors.request.use(
+  (config) => {
+    const accessToken = getAccessToken();
+
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+
+    return config;
+  },
+  (error: unknown) => {
+    return Promise.reject(error);
+  },
+);

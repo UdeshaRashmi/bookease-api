@@ -1,27 +1,27 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
 import {
   CalendarCheck,
   LayoutDashboard,
   LockKeyhole,
   Wrench,
-} from "lucide-react";
+} from 'lucide-react';
+
+import { LogoutButton } from '@/features/auth/components/LogoutButton';
 
 export const metadata: Metadata = {
-  title: "Admin Dashboard",
-  description: "BookEase administrator dashboard.",
+  title: 'Admin Dashboard',
+  description: 'BookEase administrator dashboard.',
 };
 
 const upcomingModules = [
   {
-    title: "Service Management",
-    description:
-      "Create, view, update, and remove BookEase services.",
+    title: 'Service Management',
+    description: 'Create, view, update, and remove BookEase services.',
     icon: Wrench,
   },
   {
-    title: "Booking Management",
-    description:
-      "Review bookings and manage their current status.",
+    title: 'Booking Management',
+    description: 'Review bookings and manage their current status.',
     icon: CalendarCheck,
   },
 ];
@@ -53,12 +53,13 @@ export default function AdminDashboardPage() {
             </p>
           </div>
 
-          <div className="inline-flex w-fit items-center gap-2 rounded-full border bg-background px-4 py-2 text-sm text-muted-foreground">
-            <LockKeyhole
-              className="size-4 text-primary"
-              aria-hidden="true"
-            />
-            Protected administrator route
+          <div className="flex flex-col items-start gap-3 sm:items-end">
+            <div className="inline-flex w-fit items-center gap-2 rounded-full border bg-background px-4 py-2 text-sm text-muted-foreground">
+              <LockKeyhole className="size-4 text-primary" aria-hidden="true" />
+              Protected administrator route
+            </div>
+
+            <LogoutButton />
           </div>
         </div>
       </div>
@@ -80,10 +81,7 @@ export default function AdminDashboardPage() {
                 className="rounded-xl border bg-card p-6 shadow-sm"
               >
                 <div className="flex size-11 items-center justify-center rounded-lg bg-primary/10">
-                  <Icon
-                    className="size-5 text-primary"
-                    aria-hidden="true"
-                  />
+                  <Icon className="size-5 text-primary" aria-hidden="true" />
                 </div>
 
                 <h3 className="mt-5 text-lg font-semibold">{module.title}</h3>
