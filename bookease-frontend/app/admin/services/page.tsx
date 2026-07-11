@@ -1,15 +1,34 @@
-'use client';
+﻿"use client";
 
-import Link from 'next/link';
-import { AlertCircle, Loader2, Plus, Search } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import {
+  AlertCircle,
+  Loader2,
+  Plus,
+  Search,
+  Trash2,
+} from "lucide-react";
+import Link from "next/link";
+import { useMemo, useState } from "react";
 
-import { useServices } from '@/features/services/hooks/use-services';
+import {
+  useDeleteService,
+  useServices,
+} from "@/features/services/hooks/use-services";
 
 export default function AdminServicesPage() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [deletingServiceId, setDeletingServiceId] = useState<string | null>(
+    null,
+  );
+  const [deleteError, setDeleteError] = useState("");
 
-  const { data: services = [], isLoading, isError } = useServices();
+  const {
+    data: services = [],
+    isLoading,
+    isError,
+  } = useServices();
+
+  const deleteServiceMutation = useDeleteService();
 
   const filteredServices = useMemo(() => {
     const normalizedSearchTerm = searchTerm.trim().toLowerCase();
@@ -25,6 +44,32 @@ export default function AdminServicesPage() {
       );
     });
   }, [searchTerm, services]);
+
+  async function handleDeleteService(
+    serviceId: string,
+    serviceTitle: string,
+  ) {
+    const shouldDelete = window.confirm(
+      `Are you sure you want to delete "${serviceTitle}"? This action cannot be undone.`,
+    );
+
+    if (!shouldDelete) {
+      return;
+    }
+
+    setDeleteError("");
+    setDeletingServiceId(serviceId);
+
+    try {
+      await deleteServiceMutation.mutateAsync(serviceId);
+    } catch {
+      setDeleteError(
+        "Unable to delete the service. Please try again.",
+      );
+    } finally {
+      setDeletingServiceId(null);
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -47,6 +92,25 @@ export default function AdminServicesPage() {
           Add Service
         </Link>
       </div>
+
+      {deleteError && (
+        <div
+          role="alert"
+          className="flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4"
+        >
+          <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-600" />
+
+          <div>
+            <p className="text-sm font-medium text-red-800">
+              Service deletion failed
+            </p>
+
+            <p className="mt-1 text-sm text-red-700">
+              {deleteError}
+            </p>
+          </div>
+        </div>
+      )}
 
       <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
         <div className="border-b border-slate-200 p-4">
@@ -92,14 +156,14 @@ export default function AdminServicesPage() {
           <div className="flex min-h-64 flex-col items-center justify-center px-6 text-center">
             <p className="font-medium text-slate-900">
               {searchTerm
-                ? 'No matching services found'
-                : 'No services available'}
+                ? "No matching services found"
+                : "No services available"}
             </p>
 
             <p className="mt-1 text-sm text-slate-600">
               {searchTerm
-                ? 'Try using a different search term.'
-                : 'Create your first service to get started.'}
+                ? "Try using a different search term."
+                : "Create your first service to get started."}
             </p>
           </div>
         )}
@@ -118,50 +182,80 @@ export default function AdminServicesPage() {
               </thead>
 
               <tbody className="divide-y divide-slate-200">
-                {filteredServices.map((service) => (
-                  <tr key={service.id} className="transition hover:bg-slate-50">
-                    <td className="px-6 py-4">
-                      <div>
-                        <p className="font-medium text-slate-900">
-                          {service.title}
-                        </p>
+                {filteredServices.map((service) => {
+                  const isDeleting =
+                    deletingServiceId === service.id;
 
-                        <p className="mt-1 max-w-md truncate text-sm text-slate-500">
-                          {service.description}
-                        </p>
-                      </div>
-                    </td>
+                  return (
+                    <tr
+                      key={service.id}
+                      className="transition hover:bg-slate-50"
+                    >
+                      <td className="px-6 py-4">
+                        <div>
+                          <p className="font-medium text-slate-900">
+                            {service.title}
+                          </p>
 
-                    <td className="px-6 py-4 text-sm text-slate-700">
-                      {service.duration} minutes
-                    </td>
+                          <p className="mt-1 max-w-md truncate text-sm text-slate-500">
+                            {service.description}
+                          </p>
+                        </div>
+                      </td>
 
-                    <td className="px-6 py-4 text-sm font-medium text-slate-900">
-                      LKR {service.price.toLocaleString()}
-                    </td>
+                      <td className="px-6 py-4 text-sm text-slate-700">
+                        {service.duration} minutes
+                      </td>
 
-                    <td className="px-6 py-4">
-                      <span
-                        className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${
-                          service.isActive
-                            ? 'bg-emerald-100 text-emerald-700'
-                            : 'bg-slate-100 text-slate-600'
-                        }`}
-                      >
-                        {service.isActive ? 'Active' : 'Inactive'}
-                      </span>
-                    </td>
+                      <td className="px-6 py-4 text-sm font-medium text-slate-900">
+                        LKR {service.price.toLocaleString()}
+                      </td>
 
-                    <td className="px-6 py-4 text-right">
-                      <Link
-                        href={`/admin/services/${service.id}/edit`}
-                        className="text-sm font-medium text-slate-700 transition hover:text-slate-950"
-                      >
-                        Edit
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
+                      <td className="px-6 py-4">
+                        <span
+                          className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${
+                            service.isActive
+                              ? "bg-emerald-100 text-emerald-700"
+                              : "bg-slate-100 text-slate-600"
+                          }`}
+                        >
+                          {service.isActive ? "Active" : "Inactive"}
+                        </span>
+                      </td>
+
+                      <td className="px-6 py-4">
+                        <div className="flex items-center justify-end gap-4">
+                          <Link
+                            href={`/admin/services/${service.id}/edit`}
+                            className="text-sm font-medium text-slate-700 transition hover:text-slate-950"
+                          >
+                            Edit
+                          </Link>
+
+                          <button
+                            type="button"
+                            disabled={isDeleting}
+                            onClick={() =>
+                              handleDeleteService(
+                                service.id,
+                                service.title,
+                              )
+                            }
+                            className="inline-flex items-center gap-1.5 text-sm font-medium text-red-600 transition hover:text-red-800 disabled:cursor-not-allowed disabled:opacity-60"
+                          >
+                            {isDeleting ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <Trash2 className="h-4 w-4" />
+                            )}
+
+                            {isDeleting ? "Deleting..." : "Delete"}
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
