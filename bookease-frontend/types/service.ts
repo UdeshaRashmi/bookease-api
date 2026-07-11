@@ -8,3 +8,13 @@ export interface Service {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface CreateServiceRequest {
+  title: string;
+  description: string;
+  duration: number;
+  price: number;
+  isActive?: boolean;
+}
+
+export type UpdateServiceRequest = Partial<CreateServiceRequest>;
