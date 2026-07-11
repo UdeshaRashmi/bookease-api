@@ -4,6 +4,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { UserRole } from '../../generated/prisma/client';
 import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -16,7 +17,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async register(registerDto: RegisterDto) {
+  async register(registerDto: RegisterDto, role: UserRole = UserRole.USER) {
     const { name, email, password } = registerDto;
 
     const existingUser = await this.usersService.findByEmail(email);
@@ -27,7 +28,11 @@ export class AuthService {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    return this.usersService.create(name, email, hashedPassword);
+    return this.usersService.create(name, email, hashedPassword, role);
+  }
+
+  registerAdmin(registerDto: RegisterDto) {
+    return this.register(registerDto, UserRole.ADMIN);
   }
 
   async login(loginDto: LoginDto) {
@@ -48,6 +53,7 @@ export class AuthService {
     const payload = {
       sub: user.id,
       email: user.email,
+      role: user.role,
     };
 
     const access_token = await this.jwtService.signAsync(payload);
@@ -58,6 +64,7 @@ export class AuthService {
         id: user.id,
         name: user.name,
         email: user.email,
+        role: user.role,
       },
     };
   }

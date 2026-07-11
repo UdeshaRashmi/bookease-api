@@ -18,7 +18,7 @@ type AdminLayoutProps = Readonly<{
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   return (
-    <AuthGuard>
+    <AuthGuard allowedRoles={["ADMIN"]}>
       <div className="min-h-screen bg-muted/20">
         <AdminHeader />
 

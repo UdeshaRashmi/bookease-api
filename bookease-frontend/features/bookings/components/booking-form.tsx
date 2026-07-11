@@ -155,7 +155,7 @@ export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
           <input
             id="customerName"
             type="text"
-            placeholder="Nimal Perera"
+            placeholder="Rashmi Paranamana"
             aria-invalid={Boolean(errors.customerName)}
             {...register('customerName')}
             className="mt-2 h-11 w-full rounded-xl border bg-background px-4 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
@@ -180,7 +180,7 @@ export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
           <input
             id="customerEmail"
             type="email"
-            placeholder="nimal@gmail.com"
+            placeholder="rashmi@gmail.com"
             aria-invalid={Boolean(errors.customerEmail)}
             {...register('customerEmail')}
             className="mt-2 h-11 w-full rounded-xl border bg-background px-4 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"

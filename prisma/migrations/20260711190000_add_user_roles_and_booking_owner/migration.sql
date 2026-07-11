@@ -1,0 +1,13 @@
+CREATE TYPE "UserRole" AS ENUM ('ADMIN', 'USER');
+
+ALTER TABLE "User" ADD COLUMN "role" "UserRole" NOT NULL DEFAULT 'USER';
+
+UPDATE "User" SET "role" = 'ADMIN';
+
+ALTER TABLE "Booking" ADD COLUMN "userId" TEXT;
+
+ALTER TABLE "Booking"
+ADD CONSTRAINT "Booking_userId_fkey"
+FOREIGN KEY ("userId") REFERENCES "User"("id")
+ON DELETE SET NULL
+ON UPDATE CASCADE;

@@ -15,7 +15,11 @@ const footerLinks = [
     href: '/book',
   },
   {
-    label: 'Admin Login',
+    label: 'User Account',
+    href: '/account',
+  },
+  {
+    label: 'Admin',
     href: '/login',
   },
 ];

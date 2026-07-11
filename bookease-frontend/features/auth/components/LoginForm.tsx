@@ -10,11 +10,17 @@ import { useForm } from 'react-hook-form';
 import { useLogin } from '@/features/auth/hooks/useLogin';
 import { saveAuthSession } from '@/features/auth/lib/auth-storage';
 import { loginSchema, type LoginFormValues } from '@/schemas/login.schema';
+import type { AuthRole } from '@/types/auth.types';
 
 type ApiErrorResponse = {
   message?: string | string[];
   error?: string;
 };
+
+type LoginFormProps = Readonly<{
+  requiredRole?: AuthRole;
+  redirectPath?: string;
+}>;
 
 function getLoginErrorMessage(error: unknown): string {
   if (error instanceof AxiosError) {
@@ -45,9 +51,13 @@ function getLoginErrorMessage(error: unknown): string {
   return 'Login failed. Please check your email and password.';
 }
 
-export function LoginForm() {
+export function LoginForm({
+  requiredRole,
+  redirectPath = '/admin',
+}: LoginFormProps) {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [roleError, setRoleError] = useState('');
 
   const loginMutation = useLogin();
 
@@ -64,11 +74,25 @@ export function LoginForm() {
   });
 
   const onSubmit = (values: LoginFormValues) => {
+    setRoleError('');
+
     loginMutation.mutate(values, {
       onSuccess: (response) => {
+        if (
+          requiredRole &&
+          response.data.user.role !== requiredRole
+        ) {
+          setRoleError(
+            requiredRole === 'ADMIN'
+              ? 'This account is not an admin account.'
+              : 'Please use a customer account to sign in here.',
+          );
+          return;
+        }
+
         saveAuthSession(response.data.access_token, response.data.user);
 
-        router.replace('/admin');
+        router.replace(redirectPath);
         router.refresh();
       },
     });
@@ -86,7 +110,7 @@ export function LoginForm() {
           id="email"
           type="email"
           autoComplete="email"
-          placeholder="admin@example.com"
+          placeholder="rashmi@gmail.com"
           aria-invalid={Boolean(errors.email)}
           aria-describedby={errors.email ? 'email-error' : undefined}
           className="h-11 w-full rounded-md border bg-background px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
@@ -139,12 +163,12 @@ export function LoginForm() {
         )}
       </div>
 
-      {loginMutation.isError && (
+      {(loginMutation.isError || roleError) && (
         <div
           role="alert"
           className="rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive"
         >
-          {getLoginErrorMessage(loginMutation.error)}
+          {roleError || getLoginErrorMessage(loginMutation.error)}
         </div>
       )}
 

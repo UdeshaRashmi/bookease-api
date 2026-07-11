@@ -107,7 +107,7 @@ export function AdminBookingForm({
         <input
           id="customerName"
           type="text"
-          placeholder="Nimal Perera"
+          placeholder="Rashmi Paranamana"
           disabled={isSubmitting}
           aria-invalid={Boolean(errors.customerName)}
           {...register("customerName")}
@@ -134,7 +134,7 @@ export function AdminBookingForm({
           <input
             id="customerEmail"
             type="email"
-            placeholder="nimal@gmail.com"
+            placeholder="rashmi@gmail.com"
             disabled={isSubmitting}
             aria-invalid={Boolean(errors.customerEmail)}
             {...register("customerEmail")}

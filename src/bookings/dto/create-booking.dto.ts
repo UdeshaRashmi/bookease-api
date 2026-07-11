@@ -14,7 +14,7 @@ const sriLankanMobileNumberPattern = /^(?:0|94|\+94)7\d{8}$/;
 export class CreateBookingDto {
   @ApiProperty({
     description: 'Customer full name',
-    example: 'Nimal Perera',
+    example: 'Rashmi Paranamana',
   })
   @IsString()
   @IsNotEmpty()
@@ -25,7 +25,7 @@ export class CreateBookingDto {
 
   @ApiProperty({
     description: 'Customer email address',
-    example: 'nimal@gmail.com',
+    example: 'rashmi@gmail.com',
   })
   @IsEmail()
   customerEmail!: string;

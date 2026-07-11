@@ -1,3 +1,5 @@
+export type AuthRole = 'ADMIN' | 'USER';
+
 export type LoginRequest = {
   email: string;
   password: string;
@@ -13,6 +15,7 @@ export type AuthUser = {
   id: string;
   name: string;
   email: string;
+  role: AuthRole;
 };
 
 export type LoginData = {

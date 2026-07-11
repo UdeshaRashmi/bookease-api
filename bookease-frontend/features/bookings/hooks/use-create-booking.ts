@@ -2,10 +2,19 @@
 
 import { useMutation } from '@tanstack/react-query';
 
-import { createBooking } from '@/lib/api/bookings';
+import { getAuthUser } from '@/features/auth/lib/auth-storage';
+import { createBooking, createMyBooking } from '@/lib/api/bookings';
 
 export function useCreateBooking() {
   return useMutation({
-    mutationFn: createBooking,
+    mutationFn: (bookingData: Parameters<typeof createBooking>[0]) => {
+      const user = getAuthUser();
+
+      if (user?.role === 'USER') {
+        return createMyBooking(bookingData);
+      }
+
+      return createBooking(bookingData);
+    },
   });
 }

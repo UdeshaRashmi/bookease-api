@@ -1,8 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { CalendarCheck2 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+
+import { BrandLogo } from '@/components/layout/BrandLogo';
+import { getAuthUser } from '@/features/auth/lib/auth-storage';
 
 const navigationLinks = [
   {
@@ -21,6 +23,9 @@ const navigationLinks = [
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const user = getAuthUser();
+  const userHref = user?.role === 'USER' ? '/account' : '/user';
+  const adminHref = user?.role === 'ADMIN' ? '/admin' : '/login';
 
   function isActiveLink(href: string) {
     if (href === '/') {
@@ -72,17 +77,17 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           <Link
-            href="/login"
+            href={userHref}
             className="inline-flex h-10 items-center justify-center rounded-xl border bg-background px-3 text-sm font-medium text-foreground transition-colors hover:bg-muted sm:px-4"
           >
-            Sign In
+            User
           </Link>
 
           <Link
-            href="/signup"
-            className="hidden h-10 items-center justify-center rounded-xl bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:inline-flex"
+            href={adminHref}
+            className="inline-flex h-10 items-center justify-center rounded-xl bg-primary px-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:px-4"
           >
-            Sign Up
+            Admin
           </Link>
         </div>
 
@@ -109,10 +114,17 @@ export function SiteHeader() {
           })}
 
           <Link
-            href="/signup"
+            href={userHref}
             className="shrink-0 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
-            Sign Up
+            User
+          </Link>
+
+          <Link
+            href={adminHref}
+            className="shrink-0 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          >
+            Admin
           </Link>
         </nav>
       </div>

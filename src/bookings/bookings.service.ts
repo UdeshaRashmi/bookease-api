@@ -85,6 +85,14 @@ export class BookingsService {
 
   // CREATE
   async create(createBookingDto: CreateBookingDto) {
+    return this.createBooking(createBookingDto);
+  }
+
+  async createForUser(createBookingDto: CreateBookingDto, userId: string) {
+    return this.createBooking(createBookingDto, userId);
+  }
+
+  private async createBooking(createBookingDto: CreateBookingDto, userId?: string) {
     const {
       customerName,
       customerEmail,
@@ -115,6 +123,7 @@ export class BookingsService {
         bookingDate: parsedBookingDate,
         bookingTime,
         notes,
+        userId,
       },
       include: {
         service: true,
@@ -124,6 +133,14 @@ export class BookingsService {
 
   // RETRIEVE ALL + PAGINATION + SEARCH + FILTER + SORTING
   async findAll(query: GetBookingsQueryDto) {
+    return this.findBookings(query);
+  }
+
+  async findForUser(userId: string, query: GetBookingsQueryDto) {
+    return this.findBookings(query, userId);
+  }
+
+  private async findBookings(query: GetBookingsQueryDto, userId?: string) {
     const {
       page = 1,
       limit = 10,
@@ -136,7 +153,7 @@ export class BookingsService {
 
     const skip = (page - 1) * limit;
 
-    const where: Prisma.BookingWhereInput = {};
+    const where: Prisma.BookingWhereInput = userId ? { userId } : {};
 
     if (search) {
       where.OR = [
@@ -241,6 +258,16 @@ export class BookingsService {
     return booking;
   }
 
+  async findOneForUser(id: string, userId: string) {
+    const booking = await this.findOne(id);
+
+    if (booking.userId !== userId) {
+      throw new NotFoundException('Booking not found');
+    }
+
+    return booking;
+  }
+
   // PUT - FULL UPDATE
   async replace(id: string, replaceBookingDto: ReplaceBookingDto) {
     await this.findOne(id);
@@ -331,6 +358,29 @@ export class BookingsService {
     });
   }
 
+  async updateForUser(
+    id: string,
+    userId: string,
+    updateBookingDto: UpdateBookingDto,
+  ) {
+    const booking = await this.findOne(id);
+
+    if (booking.userId !== userId) {
+      throw new NotFoundException('Booking not found');
+    }
+
+    if (
+      booking.status === BookingStatus.CANCELLED ||
+      booking.status === BookingStatus.COMPLETED
+    ) {
+      throw new BadRequestException(
+        'Cancelled or completed bookings cannot be updated',
+      );
+    }
+
+    return this.update(id, updateBookingDto);
+  }
+
   // PATCH STATUS
   async updateStatus(
     id: string,
@@ -383,6 +433,16 @@ export class BookingsService {
         service: true,
       },
     });
+  }
+
+  async cancelForUser(id: string, userId: string) {
+    const booking = await this.findOne(id);
+
+    if (booking.userId !== userId) {
+      throw new NotFoundException('Booking not found');
+    }
+
+    return this.cancel(id);
   }
 
   // DELETE

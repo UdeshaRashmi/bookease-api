@@ -28,3 +28,14 @@ export async function register(
 
   return response.data;
 }
+
+export async function registerAdmin(
+  registerData: RegisterRequest,
+): Promise<RegisterApiResponse> {
+  const response = await apiClient.post<RegisterApiResponse>(
+    '/auth/register-admin',
+    registerData,
+  );
+
+  return response.data;
+}

@@ -14,11 +14,18 @@ import {
   registerSchema,
   type RegisterFormValues,
 } from '@/schemas/register.schema';
+import type { AuthRole } from '@/types/auth.types';
 
 type ApiErrorResponse = {
   message?: string | string[];
   error?: string;
 };
+
+type RegisterFormProps = Readonly<{
+  accountType?: 'admin' | 'user';
+  requiredRole?: AuthRole;
+  redirectPath?: string;
+}>;
 
 function getAuthErrorMessage(error: unknown): string {
   if (error instanceof AxiosError) {
@@ -45,9 +52,13 @@ function getAuthErrorMessage(error: unknown): string {
   return 'Sign up failed. Please check your details and try again.';
 }
 
-export function RegisterForm() {
+export function RegisterForm({
+  accountType = 'user',
+  requiredRole = accountType === 'admin' ? 'ADMIN' : 'USER',
+  redirectPath = accountType === 'admin' ? '/admin' : '/account',
+}: RegisterFormProps) {
   const router = useRouter();
-  const registerMutation = useRegister();
+  const registerMutation = useRegister(accountType);
   const loginMutation = useLogin();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -86,12 +97,16 @@ export function RegisterForm() {
       password: values.password,
     });
 
+    if (loginResponse.data.user.role !== requiredRole) {
+      throw new Error('Created account role did not match the requested flow.');
+    }
+
     saveAuthSession(
       loginResponse.data.access_token,
       loginResponse.data.user,
     );
 
-    router.replace('/admin');
+    router.replace(redirectPath);
     router.refresh();
   };
 
@@ -107,7 +122,7 @@ export function RegisterForm() {
           id="name"
           type="text"
           autoComplete="name"
-          placeholder="Nimal Perera"
+          placeholder="Rashmi Paranamana"
           aria-invalid={Boolean(errors.name)}
           aria-describedby={errors.name ? 'name-error' : undefined}
           className="h-11 w-full rounded-md border bg-background px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
@@ -131,7 +146,7 @@ export function RegisterForm() {
           id="email"
           type="email"
           autoComplete="email"
-          placeholder="nimal@example.com"
+          placeholder="rashmi@gmail.com"
           aria-invalid={Boolean(errors.email)}
           aria-describedby={errors.email ? 'email-error' : undefined}
           className="h-11 w-full rounded-md border bg-background px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"

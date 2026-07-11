@@ -5,13 +5,17 @@ import { useRouter } from "next/navigation";
 
 import { clearAuthSession } from "@/features/auth/lib/auth-storage";
 
-export function LogoutButton() {
+type LogoutButtonProps = Readonly<{
+  redirectTo?: string;
+}>;
+
+export function LogoutButton({ redirectTo = "/login" }: LogoutButtonProps) {
   const router = useRouter();
 
   const handleLogout = () => {
     clearAuthSession();
 
-    router.replace("/login");
+    router.replace(redirectTo);
     router.refresh();
   };
 

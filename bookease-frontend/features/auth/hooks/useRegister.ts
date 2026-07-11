@@ -2,11 +2,14 @@
 
 import { useMutation } from "@tanstack/react-query";
 
-import { register } from "@/lib/api/auth";
+import { register, registerAdmin } from "@/lib/api/auth";
 import type { RegisterRequest } from "@/types/auth.types";
 
-export function useRegister() {
+export function useRegister(accountType: "admin" | "user" = "user") {
   return useMutation({
-    mutationFn: (registerData: RegisterRequest) => register(registerData),
+    mutationFn: (registerData: RegisterRequest) =>
+      accountType === "admin"
+        ? registerAdmin(registerData)
+        : register(registerData),
   });
 }
