@@ -3,6 +3,12 @@ export type LoginRequest = {
   password: string;
 };
 
+export type RegisterRequest = {
+  name: string;
+  email: string;
+  password: string;
+};
+
 export type AuthUser = {
   id: string;
   name: string;
@@ -17,6 +23,15 @@ export type LoginData = {
 export type LoginApiResponse = {
   success: true;
   data: LoginData;
+  timestamp: string;
+  path: string;
+};
+
+export type RegisterApiResponse = {
+  success: true;
+  data: AuthUser & {
+    createdAt?: string;
+  };
   timestamp: string;
   path: string;
 };

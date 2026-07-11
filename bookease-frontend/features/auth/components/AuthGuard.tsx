@@ -14,9 +14,19 @@ type AuthGuardProps = Readonly<{
   children: ReactNode;
 }>;
 
+type AuthStatus = "checking" | "authenticated" | "unauthenticated";
+
+function getAuthStatus(): AuthStatus {
+  if (typeof window === "undefined") {
+    return "checking";
+  }
+
+  return hasAuthSession() ? "authenticated" : "unauthenticated";
+}
+
 export function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter();
-  const isAuthenticated = useSyncExternalStore(
+  const authStatus = useSyncExternalStore(
     (onStoreChange) => {
       window.addEventListener("storage", onStoreChange);
 
@@ -24,17 +34,17 @@ export function AuthGuard({ children }: AuthGuardProps) {
         window.removeEventListener("storage", onStoreChange);
       };
     },
-    hasAuthSession,
-    () => false,
+    getAuthStatus,
+    () => "checking",
   );
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (authStatus === "unauthenticated") {
       router.replace("/login");
     }
-  }, [isAuthenticated, router]);
+  }, [authStatus, router]);
 
-  if (!isAuthenticated) {
+  if (authStatus !== "authenticated") {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
         <div className="flex items-center gap-3 text-sm text-muted-foreground">

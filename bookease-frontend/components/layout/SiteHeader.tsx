@@ -70,12 +70,21 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <Link
-          href="/login"
-          className="inline-flex h-10 items-center justify-center rounded-xl border bg-background px-3 text-sm font-medium text-foreground transition-colors hover:bg-muted sm:px-4"
-        >
-          Admin Login
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/login"
+            className="inline-flex h-10 items-center justify-center rounded-xl border bg-background px-3 text-sm font-medium text-foreground transition-colors hover:bg-muted sm:px-4"
+          >
+            Sign In
+          </Link>
+
+          <Link
+            href="/signup"
+            className="hidden h-10 items-center justify-center rounded-xl bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:inline-flex"
+          >
+            Sign Up
+          </Link>
+        </div>
 
         <nav
           aria-label="Mobile navigation"
@@ -98,6 +107,13 @@ export function SiteHeader() {
               </Link>
             );
           })}
+
+          <Link
+            href="/signup"
+            className="shrink-0 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          >
+            Sign Up
+          </Link>
         </nav>
       </div>
     </header>
