@@ -9,6 +9,7 @@ import {
   serviceSchema,
   type ServiceFormValues,
 } from "@/schemas/service.schema";
+import { capitalizeWords } from "@/lib/validation";
 
 type ServiceFormProps = {
   initialValues?: ServiceFormValues;
@@ -28,6 +29,7 @@ export function ServiceForm({
     handleSubmit,
     reset,
     setError,
+    setValue,
     formState: { errors },
   } = useForm<ServiceFormValues>({
     defaultValues: initialValues,
@@ -84,7 +86,13 @@ export function ServiceForm({
           type="text"
           placeholder="Example: Hair Consultation"
           disabled={isSubmitting}
-          {...register("title")}
+          {...register("title", {
+            onBlur: (event) => {
+              setValue("title", capitalizeWords(event.target.value), {
+                shouldValidate: true,
+              });
+            },
+          })}
           className="h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-200 disabled:cursor-not-allowed disabled:bg-slate-100"
         />
 

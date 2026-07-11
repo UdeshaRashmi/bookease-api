@@ -15,6 +15,7 @@ import {
   type RegisterFormValues,
 } from '@/schemas/register.schema';
 import type { AuthRole } from '@/types/auth.types';
+import { capitalizeWords } from '@/lib/validation';
 
 type ApiErrorResponse = {
   message?: string | string[];
@@ -66,6 +67,7 @@ export function RegisterForm({
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
@@ -126,7 +128,13 @@ export function RegisterForm({
           aria-invalid={Boolean(errors.name)}
           aria-describedby={errors.name ? 'name-error' : undefined}
           className="h-11 w-full rounded-md border bg-background px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
-          {...register('name')}
+          {...register('name', {
+            onBlur: (event) => {
+              setValue('name', capitalizeWords(event.target.value), {
+                shouldValidate: true,
+              });
+            },
+          })}
         />
 
         {errors.name && (

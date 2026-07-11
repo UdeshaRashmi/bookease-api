@@ -12,6 +12,7 @@ import {
   type BookingFormValues,
 } from '@/schemas/booking-schema';
 import type { ApiErrorResponse } from '@/types/api';
+import { capitalizeWords } from '@/lib/validation';
 
 interface BookingFormProps {
   defaultServiceId?: string;
@@ -60,6 +61,7 @@ export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<BookingFormValues>({
     resolver: zodResolver(bookingSchema),
@@ -157,7 +159,17 @@ export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
             type="text"
             placeholder="Rashmi Paranamana"
             aria-invalid={Boolean(errors.customerName)}
-            {...register('customerName')}
+            {...register('customerName', {
+              onBlur: (event) => {
+                setValue(
+                  'customerName',
+                  capitalizeWords(event.target.value),
+                  {
+                    shouldValidate: true,
+                  },
+                );
+              },
+            })}
             className="mt-2 h-11 w-full rounded-xl border bg-background px-4 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
           />
 

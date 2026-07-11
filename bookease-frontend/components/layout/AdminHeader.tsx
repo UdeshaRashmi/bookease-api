@@ -1,9 +1,11 @@
 "use client";
 
-import { CalendarCheck, ExternalLink, LayoutDashboard } from "lucide-react";
+import { LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { AdminDateTime } from "@/components/layout/AdminDateTime";
+import { BrandLogo } from "@/components/layout/BrandLogo";
 import { LogoutButton } from "@/features/auth/components/LogoutButton";
 
 const adminLinks = [
@@ -26,15 +28,18 @@ export function AdminHeader() {
   };
 
   return (
-    <header className="border-b bg-card">
+    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 shadow-[0_1px_0_rgba(15,23,42,0.03)] backdrop-blur-xl">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
         <div className="flex flex-col gap-4 md:flex-row md:items-center">
           <Link
             href="/admin"
-            className="inline-flex items-center gap-2 text-lg font-semibold"
+            className="inline-flex min-w-0 items-center gap-3"
+            aria-label="Go to BookEase admin dashboard"
           >
-            <CalendarCheck className="size-6 text-primary" aria-hidden="true" />
-            <span>BookEase Admin</span>
+            <BrandLogo />
+            <span className="hidden rounded-full bg-teal-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-teal-700 lg:inline-flex">
+              Admin
+            </span>
           </Link>
 
           <nav aria-label="Admin navigation">
@@ -48,10 +53,10 @@ export function AdminHeader() {
                     <Link
                       href={link.href}
                       aria-current={isActive ? "page" : undefined}
-                      className={`inline-flex h-10 items-center gap-2 rounded-md px-3 text-sm font-medium transition-colors ${
+                      className={`inline-flex h-10 items-center gap-2 rounded-xl px-3 text-sm font-medium transition-colors ${
                         isActive
-                          ? "bg-primary text-primary-foreground"
-                          : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                          ? "bg-slate-950 text-white shadow-sm"
+                          : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
                       }`}
                     >
                       <Icon className="size-4" aria-hidden="true" />
@@ -65,15 +70,7 @@ export function AdminHeader() {
         </div>
 
         <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center">
-          <Link
-            href="/"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-md border bg-background px-3 text-sm font-medium transition-colors hover:bg-muted sm:px-4"
-          >
-            <ExternalLink className="size-4" aria-hidden="true" />
-            View Website
-          </Link>
+          <AdminDateTime />
 
           <LogoutButton />
         </div>
