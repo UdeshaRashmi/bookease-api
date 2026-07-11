@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import {
   type ReactNode,
   useEffect,
-  useState,
+  useSyncExternalStore,
 } from "react";
 
 import { hasAuthSession } from "@/features/auth/lib/auth-storage";
@@ -16,22 +16,25 @@ type AuthGuardProps = Readonly<{
 
 export function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter();
-  const [isCheckingSession, setIsCheckingSession] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const isAuthenticated = useSyncExternalStore(
+    (onStoreChange) => {
+      window.addEventListener("storage", onStoreChange);
+
+      return () => {
+        window.removeEventListener("storage", onStoreChange);
+      };
+    },
+    hasAuthSession,
+    () => false,
+  );
 
   useEffect(() => {
-    const sessionExists = hasAuthSession();
-
-    if (!sessionExists) {
+    if (!isAuthenticated) {
       router.replace("/login");
-      return;
     }
+  }, [isAuthenticated, router]);
 
-    setIsAuthenticated(true);
-    setIsCheckingSession(false);
-  }, [router]);
-
-  if (isCheckingSession || !isAuthenticated) {
+  if (!isAuthenticated) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
         <div className="flex items-center gap-3 text-sm text-muted-foreground">

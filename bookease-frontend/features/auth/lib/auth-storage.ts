@@ -1,4 +1,4 @@
-import type { AuthUser } from "@/features/auth/types/auth.types";
+import type { AuthUser } from "@/types/auth.types";
 
 const ACCESS_TOKEN_KEY = "bookease_access_token";
 const AUTH_USER_KEY = "bookease_auth_user";

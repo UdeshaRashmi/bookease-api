@@ -1,7 +1,7 @@
 import type {
   LoginApiResponse,
   LoginRequest,
-} from '@/features/auth/types/auth.types';
+} from '@/types/auth.types';
 
 import { apiClient } from './axios';
 
