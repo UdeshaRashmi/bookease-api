@@ -1,23 +1,29 @@
-import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 
-import { AuthGuard } from "@/features/auth/components/AuthGuard";
+import { AdminHeader } from '@/components/layout/AdminHeader';
+import { AuthGuard } from '@/features/auth/components/AuthGuard';
 
 export const metadata: Metadata = {
-  title: "Admin",
-  description: "BookEase administration area.",
+  title: {
+    default: 'Admin',
+    template: '%s | BookEase Admin',
+  },
+  description: 'BookEase administration area.',
 };
 
 type AdminLayoutProps = Readonly<{
   children: ReactNode;
 }>;
 
-export default function AdminLayout({
-  children,
-}: AdminLayoutProps) {
+export default function AdminLayout({ children }: AdminLayoutProps) {
   return (
     <AuthGuard>
-      {children}
+      <div className="min-h-full bg-muted/20">
+        <AdminHeader />
+
+        {children}
+      </div>
     </AuthGuard>
   );
 }

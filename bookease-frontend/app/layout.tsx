@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
-import { SiteFooter } from '@/components/layout/SiteFooter';
-import { SiteHeader } from '@/components/layout/SiteHeader';
+import { AppShell } from '@/components/layout/AppShell';
 import { QueryProvider } from '@/providers/QueryProvider';
 
 import './globals.css';
@@ -25,13 +24,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
       <body>
         <QueryProvider>
-          <div className="flex min-h-screen flex-col">
-            <SiteHeader />
-
-            <main className="flex-1">{children}</main>
-
-            <SiteFooter />
-          </div>
+          <AppShell>{children}</AppShell>
         </QueryProvider>
       </body>
     </html>
