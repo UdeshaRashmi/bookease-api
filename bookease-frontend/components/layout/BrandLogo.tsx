@@ -21,7 +21,7 @@ export function BrandLogo({ compact = false }: BrandLogoProps) {
             BookEase
           </span>
           <span className="hidden text-xs font-medium text-slate-500 sm:block">
-            Booking made simple
+            Healthcare booking
           </span>
         </span>
       )}

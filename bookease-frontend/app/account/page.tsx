@@ -84,19 +84,19 @@ export default function AccountDashboardPage() {
   }
 
   return (
-    <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <section className="rounded-xl border bg-card p-5 shadow-sm sm:p-8">
-        <p className="text-sm font-semibold uppercase tracking-wider text-primary">
+    <main className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+      <section className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm sm:p-8">
+        <p className="text-sm font-semibold uppercase tracking-wider text-teal-600">
           My Account
         </p>
 
         <div className="mt-3 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h1 className="break-words text-3xl font-bold tracking-tight">
+            <h1 className="break-words text-3xl font-bold tracking-tight text-slate-950">
               Welcome{userName ? `, ${userName}` : ""}
             </h1>
 
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
               View your registered bookings, check their status, and manage
               upcoming requests from one place.
             </p>
@@ -105,7 +105,7 @@ export default function AccountDashboardPage() {
           <div className="grid gap-2 sm:flex sm:flex-wrap">
             <Link
               href="/book"
-              className="inline-flex h-11 items-center justify-center rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+              className="inline-flex h-11 items-center justify-center rounded-xl bg-slate-950 px-5 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
             >
               Create Booking
             </Link>
@@ -115,11 +115,11 @@ export default function AccountDashboardPage() {
         </div>
       </section>
 
-      <section className="mt-8 overflow-hidden rounded-xl border bg-card shadow-sm">
-        <div className="flex items-center justify-between border-b px-5 py-4">
+      <section className="mt-8 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
+        <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
           <div>
-            <h2 className="font-semibold">My Bookings</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <h2 className="font-semibold text-slate-950">My Bookings</h2>
+            <p className="mt-1 text-sm text-slate-500">
               {bookingResult
                 ? `${bookingResult.meta.total} booking${
                     bookingResult.meta.total === 1 ? "" : "s"
@@ -129,13 +129,13 @@ export default function AccountDashboardPage() {
           </div>
 
           {isFetching && !isLoading && (
-            <Loader2 className="size-5 animate-spin text-muted-foreground" />
+            <Loader2 className="size-5 animate-spin text-slate-500" />
           )}
         </div>
 
         {isLoading && (
           <div className="flex min-h-72 items-center justify-center">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2 text-sm text-slate-500">
               <Loader2 className="size-5 animate-spin" />
               Loading your bookings...
             </div>
@@ -144,10 +144,10 @@ export default function AccountDashboardPage() {
 
         {isError && (
           <div className="flex min-h-72 flex-col items-center justify-center gap-3 px-6 text-center">
-            <AlertCircle className="size-9 text-destructive" />
+            <AlertCircle className="size-9 text-red-500" />
             <div>
-              <p className="font-medium">Unable to load bookings</p>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="font-medium text-slate-950">Unable to load bookings</p>
+              <p className="mt-1 text-sm text-slate-500">
                 Please refresh the page or sign in again.
               </p>
             </div>
@@ -155,23 +155,25 @@ export default function AccountDashboardPage() {
         )}
 
         {cancelError && (
-          <div className="border-b border-destructive/20 bg-destructive/5 px-5 py-4 text-sm text-destructive">
+          <div className="border-b border-red-100 bg-red-50 px-5 py-4 text-sm text-red-700">
             {cancelError}
           </div>
         )}
 
         {!isLoading && !isError && bookings.length === 0 && (
           <div className="flex min-h-72 flex-col items-center justify-center px-6 text-center">
-            <CalendarCheck className="size-10 text-muted-foreground" />
-            <p className="mt-4 font-medium">No registered bookings yet</p>
-            <p className="mt-1 max-w-md text-sm leading-6 text-muted-foreground">
+            <CalendarCheck className="size-10 text-slate-400" />
+            <p className="mt-4 font-medium text-slate-950">
+              No registered bookings yet
+            </p>
+            <p className="mt-1 max-w-md text-sm leading-6 text-slate-500">
               Bookings created while signed in will appear here.
             </p>
           </div>
         )}
 
         {!isLoading && !isError && bookings.length > 0 && (
-          <div className="divide-y">
+          <div className="divide-y divide-slate-100">
             {bookings.map((booking) => {
               const canManage =
                 booking.status !== "CANCELLED" &&
@@ -181,36 +183,36 @@ export default function AccountDashboardPage() {
                 <article key={booking.id} className="space-y-4 p-5">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div>
-                      <h3 className="font-semibold">
+                      <h3 className="font-semibold text-slate-950">
                         {booking.service.title}
                       </h3>
-                      <p className="mt-1 text-sm text-muted-foreground">
+                      <p className="mt-1 text-sm text-slate-500">
                         {formatBookingDate(booking.bookingDate)} at{" "}
                         {booking.bookingTime}
                       </p>
                     </div>
 
-                    <span className="inline-flex w-fit rounded-full bg-muted px-3 py-1 text-xs font-medium">
+                    <span className="inline-flex w-fit rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700">
                       {booking.status}
                     </span>
                   </div>
 
                   <dl className="grid gap-3 text-sm sm:grid-cols-3">
                     <div>
-                      <dt className="text-muted-foreground">Name</dt>
-                      <dd className="mt-1 font-medium">
+                      <dt className="text-slate-500">Name</dt>
+                      <dd className="mt-1 font-medium text-slate-950">
                         {booking.customerName}
                       </dd>
                     </div>
                     <div>
-                      <dt className="text-muted-foreground">Email</dt>
-                      <dd className="mt-1 break-all font-medium">
+                      <dt className="text-slate-500">Email</dt>
+                      <dd className="mt-1 break-all font-medium text-slate-950">
                         {booking.customerEmail}
                       </dd>
                     </div>
                     <div>
-                      <dt className="text-muted-foreground">Phone</dt>
-                      <dd className="mt-1 font-medium">
+                      <dt className="text-slate-500">Phone</dt>
+                      <dd className="mt-1 font-medium text-slate-950">
                         {booking.customerPhone}
                       </dd>
                     </div>
@@ -220,7 +222,7 @@ export default function AccountDashboardPage() {
                     <div className="grid gap-2 sm:flex">
                       <Link
                         href={`/account/bookings/${booking.id}/edit`}
-                        className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border bg-background px-4 text-sm font-medium transition-colors hover:bg-muted"
+                        className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-slate-950"
                       >
                         <Pencil className="size-4" />
                         Edit
@@ -230,7 +232,7 @@ export default function AccountDashboardPage() {
                         type="button"
                         onClick={() => handleCancelBooking(booking.id)}
                         disabled={cancelBookingMutation.isPending}
-                        className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-4 text-sm font-medium text-destructive transition-colors hover:bg-destructive/15 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 text-sm font-medium text-red-700 transition-colors hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         <XCircle className="size-4" />
                         Cancel

@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
-import { CalendarDays, CheckCircle2, ShieldCheck } from 'lucide-react';
 
 import { BookingForm } from '@/features/bookings/components/booking-form';
 
 export const metadata: Metadata = {
-  title: 'Book an Appointment | BookEase',
+  title: 'Book an Appointment',
   description: 'Choose a service, date, and time to create your booking.',
 };
 
@@ -22,84 +21,70 @@ export default async function BookingPage({ searchParams }: BookingPageProps) {
     : (serviceId ?? '');
 
   return (
-    <main className="min-h-screen bg-background">
-      <section className="border-b bg-muted/30">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
-            Book an appointment
+    <main className="min-h-screen bg-white">
+      {/* ── Page Header ── */}
+      <section className="border-b bg-slate-50/60">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+          <p className="text-xs font-semibold uppercase tracking-widest text-teal-600">
+            Book an Appointment
           </p>
-
-          <h1 className="mt-4 max-w-3xl text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
-            Reserve your service in a few simple steps.
+          <h1 className="mt-4 max-w-2xl text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
+            Reserve your service in a few steps.
           </h1>
-
-          <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-            Select your preferred service, choose a suitable date and time, and
-            provide your contact information.
+          <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-500 sm:text-lg">
+            Select your preferred service, choose a suitable date, and provide
+            your contact information to complete the booking.
           </p>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-6 px-4 py-10 sm:px-6 sm:py-12 lg:grid-cols-[1fr_1.5fr] lg:gap-8 lg:px-8">
-        <aside className="h-fit rounded-xl border bg-muted/30 p-5 sm:p-8">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-            <CalendarDays className="h-6 w-6" />
-          </div>
+      {/* ── Content ── */}
+      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[1fr_1.6fr] lg:px-8">
 
-          <h2 className="mt-6 text-2xl font-semibold tracking-tight text-foreground">
-            Simple and convenient booking
+        {/* Left — Info sidebar */}
+        <aside className="h-fit rounded-2xl border border-slate-100 bg-slate-50/60 p-6 sm:p-8">
+          <div className="mb-1 h-px w-8 bg-teal-500" />
+          <h2 className="mt-5 text-xl font-bold tracking-tight text-slate-950">
+            Simple & convenient
           </h2>
-
-          <p className="mt-3 text-sm leading-6 text-muted-foreground">
-            You do not need to create an account to submit a booking. Your
-            booking will initially be created with the pending status.
+          <p className="mt-2 text-sm leading-6 text-slate-500">
+            No account needed. Your booking will be created with a{' '}
+            <span className="font-medium text-slate-700">pending</span> status
+            and reviewed by our team.
           </p>
 
           <div className="mt-8 space-y-5">
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-
-              <div>
-                <p className="font-medium text-foreground">
-                  Select an active service
-                </p>
-
-                <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                  Choose from the currently available BookEase services.
-                </p>
+            {[
+              {
+                step: '01',
+                title: 'Select an active service',
+                desc: 'Choose from the currently available BookEase services.',
+              },
+              {
+                step: '02',
+                title: 'Choose your date',
+                desc: 'Past dates and duplicate time slots are not allowed.',
+              },
+              {
+                step: '03',
+                title: 'Submit securely',
+                desc: 'Your details are validated before the booking is submitted.',
+              },
+            ].map(({ step, title, desc }) => (
+              <div key={step} className="flex gap-4">
+                <span className="mt-0.5 text-sm font-extrabold text-teal-500">
+                  {step}
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-slate-950">{title}</p>
+                  <p className="mt-0.5 text-sm leading-5 text-slate-500">{desc}</p>
+                </div>
               </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-
-              <div>
-                <p className="font-medium text-foreground">
-                  Choose your date and time
-                </p>
-
-                <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                  Past dates and duplicate time slots are not allowed.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-
-              <div>
-                <p className="font-medium text-foreground">
-                  Validated and protected
-                </p>
-
-                <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                  Your details are checked before the booking is submitted.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </aside>
 
+        {/* Right — Form */}
         <BookingForm defaultServiceId={selectedServiceId} />
       </section>
     </main>

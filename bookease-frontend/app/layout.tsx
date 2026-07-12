@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: '%s | BookEase',
   },
   description:
-    'Discover available services and make bookings easily with BookEase.',
+    'Discover healthcare services and request appointments easily with BookEase.',
 };
 
 type RootLayoutProps = Readonly<{
