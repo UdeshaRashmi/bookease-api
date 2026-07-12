@@ -82,6 +82,20 @@ export default async function BookingPage({ searchParams }: BookingPageProps) {
               </div>
             ))}
           </div>
+
+          <div className="mt-8 overflow-hidden rounded-2xl border border-white bg-slate-100 shadow-sm ring-1 ring-slate-100">
+            <video
+              aria-label="Healthcare appointment booking preview"
+              className="aspect-[4/3] w-full bg-slate-100 object-cover"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+            >
+              <source src="/booking page v.mp4" type="video/mp4" />
+            </video>
+          </div>
         </aside>
 
         {/* Right — Form */}
