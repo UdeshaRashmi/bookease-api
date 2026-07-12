@@ -370,4 +370,4 @@ Unit test files are included in the backend project. Some starter test files may
 
 ## Developer
 
-Developed by P.M. Udesha Rashmi as a full-stack healthcare booking platform using NestJS, Next.js, Prisma, and PostgreSQL.
+Developed by Parana Manage Udesha Rashmi as a full-stack healthcare booking platform using NestJS, Next.js, Prisma, and PostgreSQL.
