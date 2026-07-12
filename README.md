@@ -1,252 +1,383 @@
-# 📘 BookEase
+# BookEase Healthcare Booking Platform
 
-## Modern Full-Stack Booking Management System
+BookEase is a full-stack healthcare appointment booking platform built with a NestJS API, PostgreSQL database, Prisma ORM, and a responsive Next.js frontend. It helps patients browse healthcare services, choose a preferred date and time, and submit appointment requests through a clean customer-facing interface.
 
-BookEase is a modern full-stack booking management system developed using **Next.js**, **NestJS**, **PostgreSQL**, and **Prisma ORM**. The platform enables users to browse available services, make bookings, and securely manage appointments through a responsive web application. Administrators can manage services, bookings, and customer information using a dedicated dashboard.
+The system also includes protected admin tools for managing healthcare services, assigned doctors, appointments, booking statuses, and customer requests.
 
----
+## Project Overview
 
-## ✨ Key Features
+BookEase is designed around a simple healthcare booking flow:
 
-### 🔐 Authentication
+1. Patients browse available healthcare services.
+2. Patients choose a service, assigned doctor, date, and time.
+3. Guests can submit bookings without authentication.
+4. Registered users can view and manage their own bookings.
+5. Admin users can manage services, doctors, and all booking records.
 
-- User Registration
-- User Login
-- JWT Authentication
-- Protected Routes
-- Password Hashing using bcrypt
-- Secure Authorization
+The project is split into two parts:
 
-### 🛠 Service Management
+- Backend API: NestJS, TypeScript, Prisma, PostgreSQL
+- Frontend app: Next.js, React, TypeScript, Tailwind CSS
 
-- Create Services
-- View All Services
-- View Individual Service Details
-- Update Services
-- Delete Services
-- Activate / Deactivate Services
+## Key Features
 
-### 📅 Booking Management
+- JWT authentication for users and admins
+- Customer registration and login
+- Admin registration and login
+- Public healthcare service browsing
+- Service management with assigned doctor names
+- Public appointment request creation
+- Registered-user booking history
+- Admin booking management
+- Booking status updates
+- Booking cancellation rules
+- Pagination, search, filtering, and sorting for bookings
+- DTO validation with class-validator
+- Global exception handling
+- Standard API response formatting
+- Swagger API documentation
+- Responsive public, customer, and admin interfaces
 
-- Create Booking
-- View All Bookings
-- View Booking Details
-- Update Booking
-- Cancel Booking
-- Update Booking Status
-- Delete Booking
-- Duplicate Booking Validation
-- Booking Date Validation
+## Technology Stack
 
-### 📊 Advanced Features
+### Backend
 
-- Pagination
-- Search
-- Filtering
-- Sorting
-- Request Validation
-- Swagger API Documentation
-- Global Exception Handling
-- Standard API Response Format
-- HTTP Request Logging
+- NestJS
+- TypeScript
+- PostgreSQL
+- Prisma ORM
+- JWT and Passport
+- bcrypt
+- Swagger
+- class-validator
 
----
-
-# 🛠 Technology Stack
-
-## Frontend
+### Frontend
 
 - Next.js
 - React
 - TypeScript
 - Tailwind CSS
 - Axios
+- TanStack Query
 - React Hook Form
 - Zod
-- TanStack Query
-- Framer Motion
+- Lucide React
 
-## Backend
-
-- NestJS
-- TypeScript
-- Prisma ORM
-- PostgreSQL
-- JWT Authentication
-- Passport
-- Swagger
-
----
-
-# 🏗 System Architecture
+## Project Structure
 
 ```text
-                BookEase Platform
-
-        ┌──────────────────────────────┐
-        │      Next.js Frontend        │
-        └──────────────┬───────────────┘
-                       │
-                 HTTPS REST API
-                       │
-        ┌──────────────▼───────────────┐
-        │        NestJS Backend        │
-        │                              │
-        │ • Authentication             │
-        │ • Services                   │
-        │ • Bookings                   │
-        └──────────────┬───────────────┘
-                       │
-                  Prisma ORM
-                       │
-        ┌──────────────▼───────────────┐
-        │      PostgreSQL Database     │
-        └──────────────────────────────┘
+bookease-api/
+|-- prisma/
+|   |-- schema.prisma
+|   `-- migrations/
+|-- src/
+|   |-- auth/
+|   |-- bookings/
+|   |-- common/
+|   |-- prisma/
+|   |-- services/
+|   |-- users/
+|   |-- app.module.ts
+|   `-- main.ts
+|-- bookease-frontend/
+|   |-- app/
+|   |-- components/
+|   |-- features/
+|   |-- lib/
+|   |-- providers/
+|   |-- public/
+|   |-- schemas/
+|   `-- types/
+|-- generated/
+|-- package.json
+`-- README.md
 ```
 
----
+## Installation Steps
 
-# 📂 Project Structure
+Clone the repository and install dependencies for both backend and frontend.
+
+```bash
+git clone <your-repository-url>
+cd bookease-api
+npm install
+cd bookease-frontend
+npm install
+```
+
+Return to the backend root when running backend commands:
+
+```bash
+cd ..
+```
+
+## Environment Variables
+
+Do not commit real `.env` or `.env.local` files. Use placeholders like the examples below.
+
+### Backend `.env.example`
+
+Create a `.env` file in the project root:
+
+```env
+DATABASE_URL="postgresql://<username>:<password>@localhost:5432/<database_name>"
+JWT_SECRET="<your-secure-jwt-secret>"
+PORT=3000
+```
+
+### Frontend `.env.local.example`
+
+Create a `.env.local` file inside `bookease-frontend/`:
+
+```env
+NEXT_PUBLIC_API_URL="http://localhost:3000"
+```
+
+## Database Setup
+
+BookEase uses PostgreSQL with Prisma.
+
+1. Create a PostgreSQL database.
+2. Add your database connection string to the backend `.env`.
+3. Generate the Prisma client.
+4. Run database migrations.
+
+```bash
+npx prisma generate
+npx prisma migrate deploy
+```
+
+For local development, you can also use:
+
+```bash
+npx prisma migrate dev
+```
+
+## Running Migrations
+
+Migration files are stored in:
 
 ```text
-BookEase
-│
-├── backend
-│   ├── auth
-│   ├── bookings
-│   ├── services
-│   ├── users
-│   ├── prisma
-│   ├── common
-│   └── main.ts
-│
-└── frontend
-    ├── app
-    ├── components
-    ├── hooks
-    ├── services
-    ├── lib
-    ├── types
-    └── public
+prisma/migrations/
 ```
 
----
+To apply all existing migrations to a database:
 
-# 🚀 Core Functionalities
+```bash
+npx prisma migrate deploy
+```
 
-✅ User Authentication
+To check migration status:
 
-✅ Service Management
+```bash
+npx prisma migrate status
+```
 
-✅ Booking Management
+To inspect the database visually:
 
-✅ Booking Status Management
+```bash
+npx prisma studio
+```
 
-✅ Pagination
+## Running the Application
 
-✅ Search
+Run the backend API from the project root:
 
-✅ Filtering
+```bash
+npm run start:dev
+```
 
-✅ Sorting
+The backend runs on:
 
-✅ JWT Authorization
+```text
+http://localhost:3000
+```
 
-✅ DTO Validation
+Run the frontend from `bookease-frontend/`:
 
-✅ Swagger Documentation
+```bash
+cd bookease-frontend
+npm run dev
+```
 
-✅ Request Logging
+The frontend runs on:
 
-✅ Global Exception Filter
+```text
+http://localhost:3001
+```
 
-✅ Standardized API Responses
+## API Documentation
 
----
-
-# 📷 Application Screens
-
-- Home Page
-- Services Page
-- Service Details
-- Booking Page
-- Login
-- Register
-- User Dashboard
-- Admin Dashboard
-- Booking Management
-- Services Management
-
----
-
-# 📚 API Documentation
-
-Swagger documentation is available at:
+Swagger documentation is available after starting the backend:
 
 ```text
 http://localhost:3000/api
 ```
 
----
+Swagger includes the main authentication, services, and bookings endpoints. Protected endpoints require a Bearer token.
 
-# 🔐 Authentication Flow
+## Main API Endpoints
+
+### Authentication
 
 ```text
-User
- │
- ▼
-Login
- │
- ▼
-JWT Token Generated
- │
- ▼
-Bearer Token
- │
- ▼
-Protected API Routes
+POST /auth/register
+POST /auth/register-admin
+POST /auth/login
 ```
 
----
+### Services
 
-# 📈 Project Highlights
+```text
+POST   /services
+GET    /services
+GET    /services/:id
+PATCH  /services/:id
+DELETE /services/:id
+```
 
-- Modern Full-Stack Architecture
-- RESTful API Design
-- Clean Code Structure
-- Modular Architecture
-- Secure Authentication
-- Responsive User Interface
-- Enterprise-Level Backend Practices
-- Scalable Database Design
+Service management endpoints are protected and intended for admin users.
 
----
+### Bookings
 
-# 🔮 Future Enhancements
+```text
+POST   /bookings
+POST   /bookings/my/bookings
+GET    /bookings
+GET    /bookings/:id
+PUT    /bookings/:id
+PATCH  /bookings/:id
+PATCH  /bookings/:id/status
+PATCH  /bookings/:id/cancel
+DELETE /bookings/:id
+```
 
-- Online Payment Integration
-- Email Notifications
-- Booking Reminder System
-- Customer Reviews & Ratings
-- Real-Time Appointment Availability
-- Booking Calendar View
-- Admin Analytics Dashboard
-- User Profile Management
-- Service Categories
-- Image Upload Support
+### Customer Bookings
 
----
+```text
+GET   /bookings/my/bookings
+GET   /bookings/my/bookings/:id
+PATCH /bookings/my/bookings/:id
+PATCH /bookings/my/bookings/:id/cancel
+```
 
-# 👨‍💻 Developer
+## Business Rules
 
-**P.M.Udesha Rashmi**
+- A booking must belong to an existing healthcare service.
+- Inactive services cannot be booked.
+- Booking dates cannot be in the past.
+- Duplicate bookings are prevented for the same service, date, and time.
+- Cancelled bookings cannot be marked as completed.
+- Completed bookings cannot be cancelled.
+- Guests can create bookings without authentication.
+- Registered users can manage their own bookings.
+- Admin users manage services and all booking records.
 
-Full-Stack Developer passionate about building scalable, secure, and user-friendly web applications using modern technologies.
+## Database Models
 
-### Connect with Me
+### User
 
-- GitHub: https://github.com/UdeshaRashmi
-- LinkedIn: https://linkedin.com/in/udesha-rashmi-944894331
-- Email: udesha77722@gmail.com
+- id
+- name
+- email
+- password
+- role
+- bookings
+- createdAt
+- updatedAt
 
-Developed as a modern full-stack booking management system using Next.js, NestJS, Prisma ORM, and PostgreSQL.
+### Service
+
+- id
+- title
+- description
+- doctorName
+- duration
+- price
+- isActive
+- bookings
+- createdAt
+- updatedAt
+
+### Booking
+
+- id
+- customerName
+- customerEmail
+- customerPhone
+- serviceId
+- userId
+- bookingDate
+- bookingTime
+- status
+- notes
+- createdAt
+- updatedAt
+
+## Booking Statuses
+
+```text
+PENDING
+CONFIRMED
+CANCELLED
+COMPLETED
+```
+
+## Assumptions Made
+
+- PostgreSQL is used as the database.
+- Healthcare services are managed by admin users.
+- Each service can have one assigned doctor name.
+- Customers can create appointment requests without logging in.
+- Logged-in customers can view and manage bookings created under their account.
+- Appointment requests start with the `PENDING` status.
+- The platform stores appointment requests, not real-time doctor availability.
+- Payments, email notifications, and SMS reminders are outside the current scope.
+
+## Testing and Verification
+
+Backend build:
+
+```bash
+npm run build
+```
+
+Frontend lint and build:
+
+```bash
+cd bookease-frontend
+npm run lint
+npm run build
+```
+
+Unit test files are included in the backend project. Some starter test files may require dependency mocks or module imports before they can run successfully in isolation.
+
+## Submission Checklist
+
+- GitHub repository link
+- Updated `README.md`
+- Swagger API documentation
+- Prisma migration files
+- `.env.example` style environment variable documentation
+- Installation instructions
+- Database setup instructions
+- Application running instructions
+- Future improvement notes
+
+## Future Improvements
+
+- Refresh token support
+- Docker and Docker Compose setup
+- Email appointment confirmations
+- SMS reminders
+- Doctor availability calendar
+- Service categories
+- Patient profile page
+- Admin analytics dashboard
+- Better unit and integration test coverage
+- Appointment rescheduling workflow
+- Payment integration
+
+## Developer
+
+Developed by P.M. Udesha Rashmi as a full-stack healthcare booking platform using NestJS, Next.js, Prisma, and PostgreSQL.
