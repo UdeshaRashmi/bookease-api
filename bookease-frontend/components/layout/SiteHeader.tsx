@@ -33,6 +33,10 @@ const navigationLinks = [
     label: 'Book Now',
     href: '/book',
   },
+  {
+    label: 'Contact',
+    href: '/contact',
+  },
 ];
 
 export function SiteHeader() {

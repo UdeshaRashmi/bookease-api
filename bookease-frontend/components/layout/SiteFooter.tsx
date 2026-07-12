@@ -35,6 +35,10 @@ const footerLinks = [
     label: 'Book Now',
     href: '/book',
   },
+  {
+    label: 'Contact',
+    href: '/contact',
+  },
 ];
 
 const supportItems = [

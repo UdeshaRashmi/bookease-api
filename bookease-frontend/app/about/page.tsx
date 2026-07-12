@@ -311,12 +311,12 @@ export default function AboutPage() {
 
           <div className="mt-10 rounded-xl border border-slate-100 bg-slate-50 px-6 py-5 text-center">
             <p className="text-sm text-slate-500">
-              Still have questions?{' '}
+              Need help before booking?{' '}
               <Link
-                href="/book"
+                href="/contact"
                 className="font-semibold text-teal-600 underline-offset-2 hover:underline"
               >
-                Make an appointment
+                Contact us
               </Link>{' '}
               or{' '}
               <Link
