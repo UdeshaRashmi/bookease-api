@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import {
   AlertCircle,
@@ -12,6 +12,7 @@ import Link from "next/link";
 
 import { useBookings } from "@/features/bookings/hooks/use-bookings";
 import { useServices } from "@/features/services/hooks/use-services";
+import { formatDisplayTime } from "@/lib/format-time";
 
 function formatBookingDate(dateValue: string) {
   const date = new Date(dateValue);
@@ -109,7 +110,7 @@ export default function AdminDashboardPage() {
     <section className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wider text-primary">
+          <p className="text-sm font-semibold uppercase tracking-wider text-cyan-700">
             Admin Overview
           </p>
 
@@ -132,7 +133,7 @@ export default function AdminDashboardPage() {
 
           <Link
             href="/admin/bookings"
-            className="inline-flex h-10 w-full items-center justify-center rounded-lg bg-slate-900 px-4 text-sm font-medium text-white transition hover:bg-slate-700 sm:w-auto"
+            className="inline-flex h-10 w-full items-center justify-center rounded-lg bg-cyan-700 px-4 text-sm font-medium text-white transition hover:bg-cyan-600 sm:w-auto"
           >
             Manage Bookings
           </Link>
@@ -174,7 +175,7 @@ export default function AdminDashboardPage() {
               return (
                 <article
                   key={statistic.title}
-                  className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+                  className="rounded-xl border border-cyan-100 bg-white p-5 shadow-sm"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
@@ -187,8 +188,8 @@ export default function AdminDashboardPage() {
                       </p>
                     </div>
 
-                    <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-slate-100">
-                      <Icon className="h-5 w-5 text-slate-700" />
+                    <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-cyan-50">
+                      <Icon className="h-5 w-5 text-cyan-700" />
                     </div>
                   </div>
 
@@ -215,7 +216,7 @@ export default function AdminDashboardPage() {
 
                 <Link
                   href="/admin/bookings"
-                  className="text-sm font-medium text-slate-700 transition hover:text-slate-950"
+                className="text-sm font-medium text-cyan-700 transition hover:text-cyan-900"
                 >
                   View all
                 </Link>
@@ -273,7 +274,7 @@ export default function AdminDashboardPage() {
                             </p>
 
                             <p className="mt-1 text-sm text-slate-500">
-                              {booking.bookingTime}
+                              {formatDisplayTime(booking.bookingTime)}
                             </p>
                           </td>
 
@@ -320,7 +321,7 @@ export default function AdminDashboardPage() {
                               {formatBookingDate(booking.bookingDate)}
                             </dd>
                             <dd className="mt-1 text-slate-500">
-                              {booking.bookingTime}
+                              {formatDisplayTime(booking.bookingTime)}
                             </dd>
                           </div>
                         </dl>
@@ -334,10 +335,10 @@ export default function AdminDashboardPage() {
             <div className="space-y-5">
               <Link
                 href="/admin/services"
-                className="block rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-slate-300 hover:shadow-md"
+              className="block rounded-xl border border-cyan-100 bg-white p-6 shadow-sm transition hover:border-cyan-200 hover:shadow-md"
               >
-                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-slate-100">
-                  <Wrench className="h-5 w-5 text-slate-700" />
+                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-cyan-50">
+                  <Wrench className="h-5 w-5 text-cyan-700" />
                 </div>
 
                 <h2 className="mt-5 font-semibold text-slate-950">
@@ -349,17 +350,17 @@ export default function AdminDashboardPage() {
                   BookEase services.
                 </p>
 
-                <p className="mt-5 text-sm font-medium text-slate-900">
-                  Manage services →
+                <p className="mt-5 text-sm font-medium text-cyan-700">
+                  Manage services ?
                 </p>
               </Link>
 
               <Link
                 href="/admin/bookings"
-                className="block rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-slate-300 hover:shadow-md"
+              className="block rounded-xl border border-cyan-100 bg-white p-6 shadow-sm transition hover:border-cyan-200 hover:shadow-md"
               >
-                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-slate-100">
-                  <CalendarCheck className="h-5 w-5 text-slate-700" />
+                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-cyan-50">
+                  <CalendarCheck className="h-5 w-5 text-cyan-700" />
                 </div>
 
                 <h2 className="mt-5 font-semibold text-slate-950">
@@ -371,8 +372,8 @@ export default function AdminDashboardPage() {
                   statuses, cancel, and delete records.
                 </p>
 
-                <p className="mt-5 text-sm font-medium text-slate-900">
-                  Manage bookings →
+                <p className="mt-5 text-sm font-medium text-cyan-700">
+                  Manage bookings ?
                 </p>
               </Link>
             </div>

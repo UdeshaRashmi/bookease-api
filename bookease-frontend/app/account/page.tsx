@@ -5,6 +5,7 @@ import {
   CalendarCheck,
   Loader2,
   Pencil,
+  Search,
   XCircle,
 } from "lucide-react";
 import Link from "next/link";
@@ -16,7 +17,9 @@ import {
   useCancelMyBooking,
   useMyBookings,
 } from "@/features/bookings/hooks/use-my-bookings";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import type { BookingStatus } from "@/types/booking";
+import { formatDisplayTime } from "@/lib/format-time";
 
 function formatBookingDate(dateValue: string) {
   const date = new Date(dateValue);
@@ -38,6 +41,7 @@ function getAuthNameSnapshot() {
 
 export default function AccountDashboardPage() {
   const [cancelError, setCancelError] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const userName = useSyncExternalStore(
     (onStoreChange) => {
       window.addEventListener("storage", onStoreChange);
@@ -61,7 +65,39 @@ export default function AccountDashboardPage() {
   });
   const cancelBookingMutation = useCancelMyBooking();
 
-  const bookings = bookingResult?.data ?? [];
+  const bookings = useMemo(
+    () => bookingResult?.data ?? [],
+    [bookingResult?.data],
+  );
+  const normalizedSearchTerm = searchTerm.trim().toLowerCase();
+  const filteredBookings = useMemo(() => {
+    if (!normalizedSearchTerm) {
+      return bookings;
+    }
+
+    return bookings.filter((booking) => {
+      return (
+        booking.service.title.toLowerCase().includes(normalizedSearchTerm) ||
+        booking.customerName.toLowerCase().includes(normalizedSearchTerm) ||
+        booking.customerEmail.toLowerCase().includes(normalizedSearchTerm) ||
+        booking.customerPhone.toLowerCase().includes(normalizedSearchTerm) ||
+        booking.status.toLowerCase().includes(normalizedSearchTerm)
+      );
+    });
+  }, [bookings, normalizedSearchTerm]);
+
+  const statusCounts = bookings.reduce<Record<BookingStatus, number>>(
+    (counts, booking) => {
+      counts[booking.status] += 1;
+      return counts;
+    },
+    {
+      PENDING: 0,
+      CONFIRMED: 0,
+      CANCELLED: 0,
+      COMPLETED: 0,
+    },
+  );
 
   async function handleCancelBooking(bookingId: string) {
     const shouldCancel = window.confirm(
@@ -85,8 +121,8 @@ export default function AccountDashboardPage() {
 
   return (
     <main className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-      <section className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm sm:p-8">
-        <p className="text-sm font-semibold uppercase tracking-wider text-teal-600">
+      <section className="rounded-2xl border border-emerald-100 bg-white p-5 shadow-sm sm:p-8">
+        <p className="text-sm font-semibold uppercase tracking-wider text-emerald-700">
           My Account
         </p>
 
@@ -105,7 +141,7 @@ export default function AccountDashboardPage() {
           <div className="grid gap-2 sm:flex sm:flex-wrap">
             <Link
               href="/book"
-              className="inline-flex h-11 items-center justify-center rounded-xl bg-slate-950 px-5 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
+              className="inline-flex h-11 items-center justify-center rounded-xl bg-emerald-700 px-5 text-sm font-semibold text-white transition-colors hover:bg-emerald-600"
             >
               Create Booking
             </Link>
@@ -115,8 +151,34 @@ export default function AccountDashboardPage() {
         </div>
       </section>
 
-      <section className="mt-8 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
-        <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+      {!isLoading && !isError && bookings.length > 0 && (
+        <section className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {(
+            [
+              ["PENDING", "Awaiting review"],
+              ["CONFIRMED", "Confirmed visits"],
+              ["COMPLETED", "Completed visits"],
+              ["CANCELLED", "Cancelled requests"],
+            ] as const
+          ).map(([status, label]) => (
+            <article
+              key={status}
+              className="rounded-2xl border border-emerald-100 bg-white p-5 shadow-sm"
+            >
+              <p className="text-sm text-slate-500">{label}</p>
+              <p className="mt-3 text-3xl font-bold text-slate-950">
+                {statusCounts[status]}
+              </p>
+              <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-emerald-700">
+                {status}
+              </p>
+            </article>
+          ))}
+        </section>
+      )}
+
+      <section className="mt-8 overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-sm">
+        <div className="flex flex-col gap-4 border-b border-emerald-100 px-5 py-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <h2 className="font-semibold text-slate-950">My Bookings</h2>
             <p className="mt-1 text-sm text-slate-500">
@@ -130,6 +192,19 @@ export default function AccountDashboardPage() {
 
           {isFetching && !isLoading && (
             <Loader2 className="size-5 animate-spin text-slate-500" />
+          )}
+
+          {!isLoading && !isError && bookings.length > 0 && (
+            <div className="relative w-full lg:max-w-sm">
+              <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-slate-400" />
+              <input
+                type="search"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                placeholder="Search your bookings"
+                className="h-11 w-full rounded-xl border border-emerald-100 bg-emerald-50/60 pr-4 pl-10 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:bg-white focus:ring-2 focus:ring-emerald-100"
+              />
+            </div>
           )}
         </div>
 
@@ -172,9 +247,21 @@ export default function AccountDashboardPage() {
           </div>
         )}
 
-        {!isLoading && !isError && bookings.length > 0 && (
+        {!isLoading && !isError && bookings.length > 0 && filteredBookings.length === 0 && (
+          <div className="flex min-h-72 flex-col items-center justify-center px-6 text-center">
+            <Search className="size-10 text-slate-400" />
+            <p className="mt-4 font-medium text-slate-950">
+              No matching bookings found
+            </p>
+            <p className="mt-1 max-w-md text-sm leading-6 text-slate-500">
+              Try searching by service name, status, phone, or email.
+            </p>
+          </div>
+        )}
+
+        {!isLoading && !isError && filteredBookings.length > 0 && (
           <div className="divide-y divide-slate-100">
-            {bookings.map((booking) => {
+            {filteredBookings.map((booking) => {
               const canManage =
                 booking.status !== "CANCELLED" &&
                 booking.status !== "COMPLETED";
@@ -188,11 +275,11 @@ export default function AccountDashboardPage() {
                       </h3>
                       <p className="mt-1 text-sm text-slate-500">
                         {formatBookingDate(booking.bookingDate)} at{" "}
-                        {booking.bookingTime}
+                        {formatDisplayTime(booking.bookingTime)}
                       </p>
                     </div>
 
-                    <span className="inline-flex w-fit rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700">
+                    <span className="inline-flex w-fit rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
                       {booking.status}
                     </span>
                   </div>
@@ -222,7 +309,7 @@ export default function AccountDashboardPage() {
                     <div className="grid gap-2 sm:flex">
                       <Link
                         href={`/account/bookings/${booking.id}/edit`}
-                        className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-slate-950"
+                        className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-white px-4 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-50 hover:text-emerald-900"
                       >
                         <Pencil className="size-4" />
                         Edit

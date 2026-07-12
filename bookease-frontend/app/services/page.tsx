@@ -1,11 +1,13 @@
 'use client';
 
-import { AlertCircle, RefreshCw } from 'lucide-react';
+import { AlertCircle, RefreshCw, Search } from 'lucide-react';
+import { useMemo, useState } from 'react';
 
 import { ServiceCard } from '@/features/services/components/service-card';
 import { useServices } from '@/features/services/hooks/use-services';
 
 export default function ServicesPage() {
+  const [searchTerm, setSearchTerm] = useState('');
   const {
     data: services,
     isLoading,
@@ -14,6 +16,22 @@ export default function ServicesPage() {
     refetch,
     isFetching,
   } = useServices();
+
+  const filteredServices = useMemo(() => {
+    const normalizedSearch = searchTerm.trim().toLowerCase();
+
+    if (!services || !normalizedSearch) {
+      return services ?? [];
+    }
+
+    return services.filter((service) => {
+      return (
+        service.title.toLowerCase().includes(normalizedSearch) ||
+        service.description.toLowerCase().includes(normalizedSearch) ||
+        service.doctorName?.toLowerCase().includes(normalizedSearch)
+      );
+    });
+  }, [searchTerm, services]);
 
   return (
     <main className="min-h-screen bg-white">
@@ -35,6 +53,25 @@ export default function ServicesPage() {
 
       {/* ── Content ── */}
       <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+        {!isLoading && !isError && services && services.length > 0 && (
+          <div className="mb-8 rounded-2xl border border-slate-100 bg-slate-50/70 p-4">
+            <label htmlFor="serviceSearch" className="sr-only">
+              Search services
+            </label>
+            <div className="relative">
+              <Search className="absolute top-1/2 left-4 size-4 -translate-y-1/2 text-slate-400" />
+              <input
+                id="serviceSearch"
+                type="search"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                placeholder="Search by service, doctor, or care details"
+                className="h-12 w-full rounded-xl border border-slate-200 bg-white pr-4 pl-11 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-teal-500 focus:ring-2 focus:ring-teal-100"
+              />
+            </div>
+          </div>
+        )}
+
         {/* Loading skeletons */}
         {isLoading && (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -89,20 +126,41 @@ export default function ServicesPage() {
         {/* Services grid */}
         {!isLoading && !isError && services && services.length > 0 && (
           <>
-            <div className="mb-8 flex items-center justify-between">
+            <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-sm text-slate-500">
                 <span className="font-semibold text-slate-950">
-                  {services.length}
+                  {filteredServices.length}
                 </span>{' '}
-                {services.length === 1 ? 'service' : 'services'} available
+                {filteredServices.length === 1 ? 'service' : 'services'} shown
               </p>
+              {searchTerm && (
+                <button
+                  type="button"
+                  onClick={() => setSearchTerm('')}
+                  className="w-fit text-sm font-semibold text-teal-700 underline-offset-2 hover:underline"
+                >
+                  Clear search
+                </button>
+              )}
             </div>
 
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {services.map((service) => (
-                <ServiceCard key={service.id} service={service} />
-              ))}
-            </div>
+            {filteredServices.length === 0 ? (
+              <div className="flex min-h-72 flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 px-6 text-center">
+                <Search className="size-9 text-slate-400" />
+                <h2 className="mt-4 text-lg font-semibold text-slate-950">
+                  No matching services found
+                </h2>
+                <p className="mt-2 max-w-md text-sm leading-6 text-slate-500">
+                  Try searching by another service name, doctor, or care detail.
+                </p>
+              </div>
+            ) : (
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {filteredServices.map((service) => (
+                  <ServiceCard key={service.id} service={service} />
+                ))}
+              </div>
+            )}
           </>
         )}
       </section>

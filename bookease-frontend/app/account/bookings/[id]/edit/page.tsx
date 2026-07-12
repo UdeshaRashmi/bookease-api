@@ -71,7 +71,7 @@ export default function EditMyBookingPage() {
   if (isLoading) {
     return (
       <main className="flex min-h-80 items-center justify-center">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="flex items-center gap-2 text-sm text-emerald-700">
           <Loader2 className="size-5 animate-spin" />
           Loading booking details...
         </div>
@@ -81,10 +81,10 @@ export default function EditMyBookingPage() {
 
   if (isError || !booking || !initialValues) {
     return (
-      <main className="mx-auto w-full max-w-3xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+      <main className="mx-auto w-full max-w-3xl space-y-6 px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
         <Link
           href="/account"
-          className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition hover:text-foreground"
+          className="inline-flex items-center gap-2 text-sm font-medium text-emerald-700 transition hover:text-emerald-900"
         >
           <ArrowLeft className="size-4" />
           Back to my account
@@ -104,18 +104,18 @@ export default function EditMyBookingPage() {
   }
 
   return (
-    <main className="mx-auto w-full max-w-3xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+      <main className="mx-auto w-full max-w-3xl space-y-6 px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
       <div>
         <Link
           href="/account"
-          className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition hover:text-foreground"
+          className="inline-flex items-center gap-2 text-sm font-medium text-emerald-700 transition hover:text-emerald-900"
         >
           <ArrowLeft className="size-4" />
           Back to my account
         </Link>
 
         <div className="mt-4">
-          <h1 className="text-2xl font-bold tracking-tight">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-950">
             Edit My Booking
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">

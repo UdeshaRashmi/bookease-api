@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import {
   AlertCircle,
@@ -20,6 +20,7 @@ import type {
   BookingQueryParams,
   BookingStatus,
 } from "@/types/booking";
+import { formatDisplayTime } from "@/lib/format-time";
 
 const bookingStatuses: BookingStatus[] = [
   "PENDING",
@@ -136,7 +137,7 @@ export default function AdminBookingsPage() {
 
       <form
         onSubmit={handleFilterSubmit}
-        className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+        className="rounded-xl border border-cyan-100 bg-white p-4 shadow-sm"
       >
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           <div>
@@ -158,7 +159,7 @@ export default function AdminBookingsPage() {
                   setSearchInput(event.target.value)
                 }
                 placeholder="Name, email, phone or service"
-                className="h-10 w-full rounded-lg border border-slate-300 bg-white pr-3 pl-10 text-sm text-slate-900 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+                className="h-10 w-full rounded-lg border border-slate-300 bg-white pr-3 pl-10 text-sm text-slate-900 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100"
               />
             </div>
           </div>
@@ -179,7 +180,7 @@ export default function AdminBookingsPage() {
                   event.target.value as BookingStatus | "",
                 )
               }
-              className="mt-2 h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+              className="mt-2 h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100"
             >
               <option value="">All statuses</option>
 
@@ -206,7 +207,7 @@ export default function AdminBookingsPage() {
               onChange={(event) =>
                 setDateInput(event.target.value)
               }
-              className="mt-2 h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+              className="mt-2 h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100"
             />
           </div>
 
@@ -225,7 +226,7 @@ export default function AdminBookingsPage() {
               onChange={(event) =>
                 setServiceInput(event.target.value)
               }
-              className="mt-2 h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-200 disabled:cursor-not-allowed disabled:bg-slate-100"
+              className="mt-2 h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100 disabled:cursor-not-allowed disabled:bg-slate-100"
             >
               <option value="">
                 {isServicesLoading
@@ -246,14 +247,14 @@ export default function AdminBookingsPage() {
           <button
             type="button"
             onClick={handleClearFilters}
-            className="inline-flex h-10 items-center justify-center rounded-lg border border-slate-300 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+            className="inline-flex h-10 items-center justify-center rounded-lg border border-cyan-200 bg-white px-4 text-sm font-medium text-cyan-700 transition hover:bg-cyan-50"
           >
             Clear filters
           </button>
 
           <button
             type="submit"
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 text-sm font-medium text-white transition hover:bg-slate-700"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-cyan-700 px-4 text-sm font-medium text-white transition hover:bg-cyan-600"
           >
             <Search className="h-4 w-4" />
             Apply filters
@@ -261,7 +262,7 @@ export default function AdminBookingsPage() {
         </div>
       </form>
 
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-xl border border-cyan-100 bg-white shadow-sm">
         <div className="flex items-center justify-between gap-3 border-b border-slate-200 px-5 py-4">
           <div className="min-w-0">
             <p className="font-medium text-slate-900">
@@ -328,7 +329,7 @@ export default function AdminBookingsPage() {
           <>
             <div className="overflow-x-auto">
               <table className="hidden w-full min-w-[68rem] text-left lg:table">
-                <thead className="bg-slate-50 text-xs font-semibold tracking-wide text-slate-600 uppercase">
+                <thead className="bg-cyan-50/70 text-xs font-semibold tracking-wide text-cyan-800 uppercase">
                   <tr>
                     <th className="px-5 py-4">Customer</th>
                     <th className="px-5 py-4">Service</th>
@@ -345,7 +346,7 @@ export default function AdminBookingsPage() {
                   {bookings.map((booking) => (
                     <tr
                       key={booking.id}
-                      className="align-top transition hover:bg-slate-50"
+                      className="align-top transition hover:bg-cyan-50/40"
                     >
                       <td className="px-5 py-4">
                         <p className="font-medium text-slate-900">
@@ -380,7 +381,7 @@ export default function AdminBookingsPage() {
                         </p>
 
                         <p className="mt-1 text-sm text-slate-500">
-                          {booking.bookingTime}
+                          {formatDisplayTime(booking.bookingTime)}
                         </p>
                       </td>
 
@@ -399,7 +400,7 @@ export default function AdminBookingsPage() {
                         <div className="flex flex-col items-end gap-2">
                           <Link
                             href={`/admin/bookings/${booking.id}/edit`}
-                            className="inline-flex h-9 items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 hover:text-slate-950"
+                            className="inline-flex h-9 items-center justify-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 text-sm font-medium text-emerald-800 transition hover:border-emerald-300 hover:bg-emerald-100 hover:text-emerald-900"
                           >
                             <Pencil className="h-4 w-4" />
                             Edit
@@ -461,7 +462,7 @@ export default function AdminBookingsPage() {
                           {formatBookingDate(booking.bookingDate)}
                         </dd>
                         <dd className="mt-1 text-slate-500">
-                          {booking.bookingTime}
+                          {formatDisplayTime(booking.bookingTime)}
                         </dd>
                       </div>
 
@@ -476,7 +477,7 @@ export default function AdminBookingsPage() {
                     <div className="grid gap-2 min-[420px]:grid-cols-2 sm:grid-cols-[auto_1fr] sm:items-start">
                       <Link
                         href={`/admin/bookings/${booking.id}/edit`}
-                        className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 hover:text-slate-950"
+                        className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 text-sm font-medium text-emerald-800 transition hover:border-emerald-300 hover:bg-emerald-100 hover:text-emerald-900"
                       >
                         <Pencil className="h-4 w-4" />
                         Edit
@@ -510,7 +511,7 @@ export default function AdminBookingsPage() {
                         Math.max(1, currentPage - 1),
                       )
                     }
-                    className="inline-flex h-9 items-center justify-center gap-1 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="inline-flex h-9 items-center justify-center gap-1 rounded-lg border border-cyan-200 bg-white px-3 text-sm font-medium text-cyan-700 transition hover:bg-cyan-50 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <ChevronLeft className="h-4 w-4" />
                     Previous
@@ -529,7 +530,7 @@ export default function AdminBookingsPage() {
                         ),
                       )
                     }
-                    className="inline-flex h-9 items-center justify-center gap-1 rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="inline-flex h-9 items-center justify-center gap-1 rounded-lg border border-cyan-200 bg-white px-3 text-sm font-medium text-cyan-700 transition hover:bg-cyan-50 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     Next
                     <ChevronRight className="h-4 w-4" />

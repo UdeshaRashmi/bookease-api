@@ -3,6 +3,7 @@
 import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle, CalendarCheck, LoaderCircle } from 'lucide-react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useCreateBooking } from '@/features/bookings/hooks/use-create-booking';
@@ -12,7 +13,9 @@ import {
   type BookingFormValues,
 } from '@/schemas/booking-schema';
 import type { ApiErrorResponse } from '@/types/api';
+import type { Booking } from '@/types/booking';
 import { capitalizeWords } from '@/lib/validation';
+import { formatDisplayTime } from '@/lib/format-time';
 
 interface BookingFormProps {
   defaultServiceId?: string;
@@ -47,6 +50,9 @@ function getApiErrorMessage(error: unknown) {
 }
 
 export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
+  const [submittedBooking, setSubmittedBooking] = useState<Booking | null>(
+    null,
+  );
   const {
     data: services = [],
     isLoading: isServicesLoading,
@@ -79,9 +85,11 @@ export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
 
   async function onSubmit(values: BookingFormValues) {
     createBookingMutation.reset();
+    setSubmittedBooking(null);
 
     try {
-      await createBookingMutation.mutateAsync(values);
+      const createdBooking = await createBookingMutation.mutateAsync(values);
+      setSubmittedBooking(createdBooking);
 
       reset({
         customerName: '',
@@ -118,16 +126,56 @@ export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
         </p>
       </div>
 
-      {createBookingMutation.isSuccess && (
-        <div className="mt-6 flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-800">
-          <CalendarCheck className="mt-0.5 h-5 w-5 shrink-0" />
+      {submittedBooking && (
+        <div className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50/80 p-5 text-emerald-900">
+          <div className="flex items-start gap-3">
+            <CalendarCheck className="mt-0.5 h-5 w-5 shrink-0" />
 
-          <div>
-            <p className="font-medium">Booking created successfully</p>
-            <p className="mt-1 text-sm">
-              Your booking was submitted with the PENDING status.
-            </p>
+            <div>
+              <p className="font-semibold">
+                Your appointment request has been submitted
+              </p>
+              <p className="mt-1 text-sm text-emerald-800">
+                We received your request with the {submittedBooking.status}{' '}
+                status. Keep these details for your reference.
+              </p>
+            </div>
           </div>
+
+          <dl className="mt-5 grid gap-3 rounded-xl bg-white/70 p-4 text-sm sm:grid-cols-2">
+            <div>
+              <dt className="text-emerald-700">Service</dt>
+              <dd className="mt-1 font-semibold text-slate-950">
+                {submittedBooking.service.title}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-emerald-700">Doctor</dt>
+              <dd className="mt-1 font-semibold text-slate-950">
+                {submittedBooking.service.doctorName ?? 'Doctor A'}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-emerald-700">Date & time</dt>
+              <dd className="mt-1 font-semibold text-slate-950">
+                {new Date(submittedBooking.bookingDate).toLocaleDateString(
+                  'en-LK',
+                  {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  },
+                )}{' '}
+                at {formatDisplayTime(submittedBooking.bookingTime)}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-emerald-700">Patient</dt>
+              <dd className="mt-1 break-words font-semibold text-slate-950">
+                {submittedBooking.customerName}
+              </dd>
+            </div>
+          </dl>
         </div>
       )}
 

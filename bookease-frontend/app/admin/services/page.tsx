@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import {
   AlertCircle,
@@ -40,7 +40,8 @@ export default function AdminServicesPage() {
     return services.filter((service) => {
       return (
         service.title.toLowerCase().includes(normalizedSearchTerm) ||
-        service.description.toLowerCase().includes(normalizedSearchTerm)
+        service.description.toLowerCase().includes(normalizedSearchTerm) ||
+        service.doctorName?.toLowerCase().includes(normalizedSearchTerm)
       );
     });
   }, [searchTerm, services]);
@@ -86,7 +87,7 @@ export default function AdminServicesPage() {
 
         <Link
           href="/admin/services/new"
-          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 text-sm font-medium text-white transition hover:bg-slate-700 sm:w-auto"
+          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-cyan-700 px-4 text-sm font-medium text-white transition hover:bg-cyan-600 sm:w-auto"
         >
           <Plus className="h-4 w-4" />
           Add Service
@@ -112,8 +113,8 @@ export default function AdminServicesPage() {
         </div>
       )}
 
-      <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
-        <div className="border-b border-slate-200 p-4">
+      <div className="rounded-xl border border-cyan-100 bg-white shadow-sm">
+        <div className="border-b border-cyan-100 p-4">
           <div className="relative max-w-md">
             <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
@@ -122,7 +123,7 @@ export default function AdminServicesPage() {
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
               placeholder="Search services..."
-              className="h-10 w-full rounded-lg border border-slate-300 bg-white pr-4 pl-10 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+              className="h-10 w-full rounded-lg border border-slate-300 bg-white pr-4 pl-10 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100"
             />
           </div>
         </div>
@@ -171,7 +172,7 @@ export default function AdminServicesPage() {
         {!isLoading && !isError && filteredServices.length > 0 && (
           <div className="overflow-x-auto">
             <table className="hidden w-full min-w-[50rem] text-left md:table">
-              <thead className="bg-slate-50 text-xs font-semibold tracking-wide text-slate-600 uppercase">
+              <thead className="bg-cyan-50/70 text-xs font-semibold tracking-wide text-cyan-800 uppercase">
                 <tr>
                   <th className="px-6 py-4">Service</th>
                   <th className="px-6 py-4">Doctor</th>
@@ -190,7 +191,7 @@ export default function AdminServicesPage() {
                   return (
                     <tr
                       key={service.id}
-                      className="transition hover:bg-slate-50"
+                      className="transition hover:bg-cyan-50/40"
                     >
                       <td className="px-6 py-4">
                         <div>
@@ -232,7 +233,7 @@ export default function AdminServicesPage() {
                         <div className="flex items-center justify-end gap-4">
                           <Link
                             href={`/admin/services/${service.id}/edit`}
-                            className="text-sm font-medium text-slate-700 transition hover:text-slate-950"
+                            className="rounded-lg bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-800 ring-1 ring-emerald-200 transition hover:bg-emerald-100 hover:text-emerald-900"
                           >
                             Edit
                           </Link>
@@ -318,7 +319,7 @@ export default function AdminServicesPage() {
                     <div className="grid gap-2 min-[420px]:grid-cols-2">
                       <Link
                         href={`/admin/services/${service.id}/edit`}
-                        className="inline-flex h-10 items-center justify-center rounded-lg border border-slate-300 bg-white px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+                        className="inline-flex h-10 items-center justify-center rounded-lg border border-emerald-200 bg-emerald-50 px-3 text-sm font-medium text-emerald-800 transition hover:bg-emerald-100 hover:text-emerald-900"
                       >
                         Edit
                       </Link>

@@ -18,7 +18,7 @@ type AccountLayoutProps = Readonly<{
 export default function AccountLayout({ children }: AccountLayoutProps) {
   return (
     <AuthGuard allowedRoles={['USER']} redirectTo="/user">
-      {children}
+      <div className="min-h-screen bg-emerald-50/40">{children}</div>
     </AuthGuard>
   );
 }
