@@ -47,8 +47,8 @@ const supportItems = [
   {
     icon: Mail,
     label: 'Email support',
-    text: 'ur.pmu@gmail.com',
-    href: 'mailto:ur.pmu@gmail.com',
+    text: 'bookease@gmail.com',
+    href: 'mailto:bookease@gmail.com',
   },
   {
     icon: MapPin,

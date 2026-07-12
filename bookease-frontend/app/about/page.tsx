@@ -117,16 +117,16 @@ export default function AboutPage() {
     <main className="min-h-screen bg-white">
       <section className="border-b bg-slate-50">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8">
-          <div>
+          <div className="min-w-0">
             <p className="text-sm font-semibold uppercase tracking-wider text-teal-700">
               About BookEase
             </p>
 
-            <h1 className="mt-4 max-w-3xl text-3xl font-bold tracking-tight text-slate-950 sm:text-5xl">
-              A simpler way to request healthcare appointments.
+            <h1 className="mt-4 max-w-3xl break-words text-3xl font-bold tracking-tight text-slate-950 sm:text-5xl">
+              Healthcare booking made simple.
             </h1>
 
-            <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
+            <p className="mt-5 max-w-2xl break-words text-base leading-7 text-slate-600 sm:text-lg">
               BookEase helps patients discover healthcare services, choose a
               preferred date and time, and submit appointment requests through a
               clean, simple flow. Every step is designed to make booking feel
@@ -171,7 +171,7 @@ export default function AboutPage() {
               Our Commitments
             </span>
             <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">
-              Everything needed for a clear healthcare booking flow.
+              A clear healthcare booking flow.
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-500">
               The experience is designed around patients who need a simple way
@@ -236,8 +236,8 @@ export default function AboutPage() {
               <span className="text-sm font-semibold uppercase tracking-widest text-teal-600">
                 How It Works
               </span>
-              <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">
-                From care search to appointment request in four simple steps.
+              <h2 className="mt-3 break-words text-2xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">
+                From care search to request in four steps.
               </h2>
               <p className="mt-4 text-base leading-7 text-slate-500">
                 The flow keeps the patient experience short while collecting
@@ -288,7 +288,7 @@ export default function AboutPage() {
             <span className="text-sm font-semibold uppercase tracking-widest text-slate-400">
               FAQ
             </span>
-            <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">
+              <h2 className="mt-3 break-words text-2xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">
               Frequently asked questions
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-base text-slate-500">

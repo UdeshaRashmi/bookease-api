@@ -11,7 +11,7 @@ export function AdminFooter() {
           className="mx-auto inline-flex rounded-xl md:mx-0"
           aria-label="Go to BookEase admin dashboard"
         >
-          <BrandLogo compact />
+          <BrandLogo variant="footer" />
         </Link>
         <p>Manage services, bookings, and customer requests.</p>
       </div>

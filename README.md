@@ -226,6 +226,8 @@ POST /auth/register-admin
 POST /auth/login
 ```
 
+Admins use the same login endpoint. Access to admin features is controlled by role-based authorization.
+
 ### Services
 
 ```text
@@ -351,18 +353,6 @@ npm run build
 ```
 
 Unit test files are included in the backend project. Some starter test files may require dependency mocks or module imports before they can run successfully in isolation.
-
-## Submission Checklist
-
-- GitHub repository link
-- Updated `README.md`
-- Swagger API documentation
-- Prisma migration files
-- `.env.example` style environment variable documentation
-- Installation instructions
-- Database setup instructions
-- Application running instructions
-- Future improvement notes
 
 ## Future Improvements
 

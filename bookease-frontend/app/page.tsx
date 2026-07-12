@@ -46,16 +46,16 @@ export default function HomePage() {
     <>
       <section className="relative overflow-hidden border-b bg-white">
         <div className="mx-auto grid w-full max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-2 lg:px-8">
-          <div className="space-y-8">
+          <div className="min-w-0 space-y-8">
             <div className="space-y-5">
               <p className="text-xs font-semibold uppercase tracking-widest text-teal-600">
                 Healthcare Appointment Booking
               </p>
-              <h1 className="max-w-xl text-4xl font-extrabold leading-[1.15] tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
-                Book the healthcare service{' '}
-                <span className="text-teal-600">you need</span> with ease.
+              <h1 className="max-w-xl break-words text-3xl font-extrabold leading-[1.15] tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+                Healthcare appointments{' '}
+                <span className="text-teal-600">made simple</span>.
               </h1>
-              <p className="max-w-lg text-base leading-relaxed text-slate-500 sm:text-lg">
+              <p className="max-w-lg break-words text-base leading-relaxed text-slate-500 sm:text-lg">
                 BookEase helps patients discover health services, review care
                 details, and request appointments through one clean, simple
                 platform.
@@ -80,7 +80,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="relative hidden lg:block">
+          <div className="relative">
             <div className="overflow-hidden rounded-2xl border border-slate-100 shadow-lg">
               <Image
                 src="/Home%20hero.jpg"
@@ -101,8 +101,8 @@ export default function HomePage() {
             <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-teal-600">
               Why BookEase
             </p>
-            <h2 className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
-              A simpler way to request healthcare appointments
+            <h2 className="break-words text-2xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+              Easy healthcare appointments
             </h2>
             <p className="mt-4 text-base leading-relaxed text-slate-500">
               Everything you need to explore care options and send an
