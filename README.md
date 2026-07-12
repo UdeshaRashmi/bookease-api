@@ -387,6 +387,7 @@ Unit test files are included in the backend project. Some starter test files may
 - Admin analytics dashboard
 - Better unit and integration test coverage
 - Appointment rescheduling workflow
+- Waiting-list workflow to offer cancelled appointment slots to patients in the queue
 - Payment integration
 
 ## Developer
