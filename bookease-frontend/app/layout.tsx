@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import type { Viewport } from 'next';
 import type { ReactNode } from 'react';
 
 import { AppShell } from '@/components/layout/AppShell';
@@ -13,6 +14,11 @@ export const metadata: Metadata = {
   },
   description:
     'Discover healthcare services and request appointments easily with BookEase.',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 type RootLayoutProps = Readonly<{

@@ -1,8 +1,8 @@
 # BookEase Healthcare Booking Platform
 
-BookEase is a full-stack healthcare appointment booking platform built with a NestJS API, PostgreSQL database, Prisma ORM, and a responsive Next.js frontend. It helps patients browse healthcare services, choose a preferred date and time, and submit appointment requests through a clean customer-facing interface.
+BookEase is a full-stack healthcare appointment booking platform built with a NestJS API, PostgreSQL database, Prisma ORM, and a responsive Next.js frontend. It helps patients browse healthcare services, choose a preferred doctor, select a date and time, and submit appointment requests through a clean customer-facing interface.
 
-The system also includes protected admin tools for managing healthcare services, assigned doctors, appointments, booking statuses, and customer requests.
+The system also includes protected staff tools for managing healthcare services, assigned doctors, appointments, booking statuses, and customer requests.
 
 ## Project Overview
 
@@ -12,7 +12,7 @@ BookEase is designed around a simple healthcare booking flow:
 2. Patients choose a service, assigned doctor, date, and time.
 3. Guests can submit bookings without authentication.
 4. Registered users can view and manage their own bookings.
-5. Admin users can manage services, doctors, and all booking records.
+5. Staff/admin users can manage services, doctors, and all booking records.
 
 The project is split into two parts:
 
@@ -21,7 +21,7 @@ The project is split into two parts:
 
 ## Key Features
 
-- JWT authentication for users and admins
+- JWT authentication for customers and admins
 - Customer registration and login
 - Admin registration and login
 - Public healthcare service browsing
@@ -32,6 +32,8 @@ The project is split into two parts:
 - Booking status updates
 - Booking cancellation rules
 - Pagination, search, filtering, and sorting for bookings
+- Public contact page with healthcare support details
+- Responsive customer-first pages for home, about, services, booking, and contact
 - DTO validation with class-validator
 - Global exception handling
 - Standard API response formatting
@@ -216,6 +218,24 @@ http://localhost:3000/api
 
 Swagger includes the main authentication, services, and bookings endpoints. Protected endpoints require a Bearer token.
 
+## Frontend Pages
+
+The public frontend is designed as a customer-first healthcare booking experience:
+
+- `/` - healthcare appointment landing page
+- `/about` - platform overview and booking flow
+- `/services` - public healthcare service list
+- `/services/:id` - service details with doctor information
+- `/book` - appointment request form
+- `/contact` - public support and contact page
+- `/user` - customer login
+- `/signup` - customer registration
+- `/account` - customer booking area
+- `/login` - staff/admin login
+- `/admin` - protected admin dashboard
+
+The frontend includes responsive desktop and mobile layouts. The contact page uses local video assets stored in `bookease-frontend/public/`; keep only public-safe media files in that folder.
+
 ## Main API Endpoints
 
 ### Authentication
@@ -238,7 +258,7 @@ PATCH  /services/:id
 DELETE /services/:id
 ```
 
-Service management endpoints are protected and intended for admin users.
+Service management endpoints are protected and intended for staff/admin users.
 
 ### Bookings
 
@@ -273,7 +293,7 @@ PATCH /bookings/my/bookings/:id/cancel
 - Completed bookings cannot be cancelled.
 - Guests can create bookings without authentication.
 - Registered users can manage their own bookings.
-- Admin users manage services and all booking records.
+- Staff/admin users manage services and all booking records.
 
 ## Database Models
 
@@ -328,13 +348,14 @@ COMPLETED
 ## Assumptions Made
 
 - PostgreSQL is used as the database.
-- Healthcare services are managed by admin users.
+- Healthcare services are managed by authorized staff/admin users.
 - Each service can have one assigned doctor name.
 - Customers can create appointment requests without logging in.
 - Logged-in customers can view and manage bookings created under their account.
 - Appointment requests start with the `PENDING` status.
 - The platform stores appointment requests, not real-time doctor availability.
 - Payments, email notifications, and SMS reminders are outside the current scope.
+- Public contact details and media assets are demo-safe content and can be replaced for a real deployment.
 
 ## Testing and Verification
 

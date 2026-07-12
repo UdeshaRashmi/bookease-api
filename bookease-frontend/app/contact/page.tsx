@@ -7,7 +7,6 @@ import {
   MessageCircle,
   Phone,
 } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -22,63 +21,79 @@ const contactMethods = [
     value: '074 276 5035',
     href: 'tel:0742765035',
     icon: Phone,
-    tone: 'text-teal-700 bg-teal-50',
+    tone: 'bg-teal-50 text-teal-700 ring-teal-100',
   },
   {
     label: 'Email support',
     value: 'bookease@gmail.com',
     href: 'mailto:bookease@gmail.com',
     icon: Mail,
-    tone: 'text-sky-700 bg-sky-50',
+    tone: 'bg-sky-50 text-sky-700 ring-sky-100',
   },
   {
-    label: 'Service area',
+    label: 'Visit area',
     value: 'Malabe, Sri Lanka',
     icon: MapPin,
-    tone: 'text-rose-700 bg-rose-50',
+    tone: 'bg-rose-50 text-rose-700 ring-rose-100',
   },
 ];
 
 const supportNotes = [
   {
-    title: 'Appointment guidance',
+    title: 'Choose the right service',
     description:
-      'Get help choosing the right healthcare service before sending a booking request.',
+      'Ask for guidance before selecting a healthcare service or preferred doctor.',
     icon: CalendarCheck,
   },
   {
-    title: 'Booking follow-up',
+    title: 'Follow your request',
     description:
-      'Ask about submitted appointment requests, status updates, or contact details.',
+      'Get help understanding appointment details, contact information, and status updates.',
     icon: MessageCircle,
   },
   {
-    title: 'Support hours',
+    title: 'Plan your visit',
     description:
-      'Support details are available for patients who need quick booking assistance.',
+      'Check service area details before sending your appointment request.',
     icon: Clock3,
+  },
+];
+
+const contactVideos = [
+  {
+    src: '/Contact%20us%20page%20v2.mp4',
+    label: 'BookEase contact support preview',
+    className: 'lg:translate-y-10',
+  },
+  {
+    src: '/Contact%20us%20page%20%20v1.mp4',
+    label: 'BookEase healthcare booking support preview',
+    className: 'lg:-translate-y-4',
   },
 ];
 
 export default function ContactPage() {
   return (
     <main className="min-h-screen bg-white">
-      <section className="border-b bg-slate-50">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:px-8">
+      <section className="overflow-hidden border-b border-slate-100 bg-[linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)]">
+        <div className="mx-auto grid w-full max-w-7xl gap-10 overflow-hidden px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:px-8 lg:py-20">
           <div className="min-w-0">
             <p className="text-sm font-semibold uppercase tracking-wider text-teal-700">
               Contact BookEase
             </p>
+
             <h1 className="mt-4 max-w-3xl break-words text-3xl font-bold tracking-tight text-slate-950 sm:text-5xl">
-              Support for easier healthcare booking.
+              Friendly support before your healthcare booking.
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
-              Reach out if you need help choosing a care service, checking
-              appointment details, or understanding your next booking step.
+
+            <p className="mt-5 max-w-2xl break-words text-base leading-7 text-slate-600 sm:text-lg">
+              Need help choosing a service, checking appointment details, or
+              understanding what to do next? Reach BookEase support and keep
+              your care request simple from the start.
             </p>
 
-            <div className="mt-8 rounded-2xl border border-slate-100 bg-white px-5 py-4 shadow-sm">
-              <p className="text-sm leading-6 text-slate-500">
+            <div className="mt-8 min-w-0 rounded-2xl border border-slate-100 bg-white px-5 py-4 shadow-sm">
+              <p className="break-words text-sm leading-6 text-slate-500">
                 Ready to request care?{' '}
                 <Link
                   href="/book"
@@ -98,35 +113,40 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="space-y-5">
-            <div className="relative overflow-hidden rounded-[2rem] border border-white bg-white shadow-xl shadow-slate-200/70">
-              <div className="relative">
-                <Image
-                  src="/Home%20hero.jpg"
-                  alt="Healthcare booking support illustration"
-                  width={1200}
-                  height={850}
-                  className="aspect-[16/11] w-full object-cover [clip-path:polygon(0_0,100%_0,100%_88%,0_100%)]"
-                  priority
-                />
-                <div className="absolute right-4 bottom-5 left-4 rounded-2xl bg-white/95 p-4 shadow-lg ring-1 ring-slate-100 backdrop-blur">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-teal-600">
-                    Patient support
-                  </p>
-                  <p className="mt-1 text-sm font-bold text-slate-950">
-                    Friendly guidance before you send an appointment request.
-                  </p>
+          <div className="relative min-w-0 overflow-hidden">
+            <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
+              {contactVideos.map((video) => (
+                <div
+                  key={video.src}
+                  className={`overflow-hidden rounded-[1.75rem] border border-white bg-white shadow-2xl shadow-slate-200/80 ring-1 ring-slate-100 ${video.className}`}
+                >
+                  <video
+                    aria-label={video.label}
+                    className="aspect-[4/5] h-full w-full object-cover"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
+                  >
+                    <source src={video.src} type="video/mp4" />
+                  </video>
                 </div>
-              </div>
+              ))}
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+      <section className="border-b border-slate-100 bg-white py-10 sm:py-14">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-4 md:grid-cols-3">
             {contactMethods.map((method) => {
               const Icon = method.icon;
               const content = (
                 <>
                   <span
-                    className={`flex size-12 shrink-0 items-center justify-center rounded-xl ${method.tone}`}
+                    className={`flex size-11 shrink-0 items-center justify-center rounded-2xl ring-1 ${method.tone}`}
                   >
                     <Icon className="size-5" aria-hidden="true" />
                   </span>
@@ -145,47 +165,61 @@ export default function ContactPage() {
                 <a
                   key={method.label}
                   href={method.href}
-                  className="flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                  className="flex min-h-24 items-center gap-4 rounded-2xl border border-slate-100 bg-slate-50/70 p-5 transition-all hover:-translate-y-0.5 hover:border-teal-100 hover:bg-white hover:shadow-lg hover:shadow-slate-100"
                 >
                   {content}
                 </a>
               ) : (
                 <div
                   key={method.label}
-                  className="flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm"
+                  className="flex min-h-24 items-center gap-4 rounded-2xl border border-slate-100 bg-slate-50/70 p-5"
                 >
                   {content}
                 </div>
               );
             })}
-            </div>
           </div>
         </div>
       </section>
 
-      <section className="py-16 sm:py-24">
+      <section className="bg-slate-50 py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-6 md:grid-cols-3">
-            {supportNotes.map((item) => {
-              const Icon = item.icon;
+          <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wider text-teal-700">
+                How we can help
+              </p>
+              <h2 className="mt-3 break-words text-2xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+                Clear answers for the next step in your booking.
+              </h2>
+              <p className="mt-4 text-sm leading-7 text-slate-500 sm:text-base">
+                Contact support is focused on helping patients move from care
+                discovery to appointment request with less confusion.
+              </p>
+            </div>
 
-              return (
-                <article
-                  key={item.title}
-                  className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm"
-                >
-                  <div className="flex size-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700">
-                    <Icon className="size-5" aria-hidden="true" />
-                  </div>
-                  <h2 className="mt-5 text-base font-bold text-slate-950">
-                    {item.title}
-                  </h2>
-                  <p className="mt-2 text-sm leading-6 text-slate-500">
-                    {item.description}
-                  </p>
-                </article>
-              );
-            })}
+            <div className="grid gap-5 md:grid-cols-3">
+              {supportNotes.map((item) => {
+                const Icon = item.icon;
+
+                return (
+                  <article
+                    key={item.title}
+                    className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm"
+                  >
+                    <div className="flex size-11 items-center justify-center rounded-2xl bg-teal-50 text-teal-700">
+                      <Icon className="size-5" aria-hidden="true" />
+                    </div>
+                    <h3 className="mt-5 text-base font-bold text-slate-950">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-6 text-slate-500">
+                      {item.description}
+                    </p>
+                  </article>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
