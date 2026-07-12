@@ -35,6 +35,7 @@ model Service {
   id          String    @id @default(uuid())
   title       String
   description String
+  doctorName  String    @default("Doctor A")
   duration    Int
   price       Float
   isActive    Boolean   @default(true)

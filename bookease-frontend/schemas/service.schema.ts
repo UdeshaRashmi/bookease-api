@@ -16,6 +16,13 @@ export const serviceSchema = z.object({
     .min(10, 'Description must contain at least 10 characters.')
     .max(1000, 'Description cannot exceed 1000 characters.'),
 
+  doctorName: z
+    .string()
+    .trim()
+    .min(2, 'Doctor name must contain at least 2 characters.')
+    .max(100, 'Doctor name cannot exceed 100 characters.')
+    .transform(capitalizeWords),
+
   duration: z
     .number({
       message: 'Duration is required.',
@@ -38,6 +45,7 @@ export type ServiceFormValues = z.infer<typeof serviceSchema>;
 export const defaultServiceFormValues: ServiceFormValues = {
   title: '',
   description: '',
+  doctorName: 'Doctor A',
   duration: 30,
   price: 0,
   isActive: true,

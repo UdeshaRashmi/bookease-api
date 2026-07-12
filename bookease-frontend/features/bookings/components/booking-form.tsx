@@ -262,7 +262,8 @@ export function BookingForm({ defaultServiceId = '' }: BookingFormProps) {
 
             {activeServices.map((service) => (
               <option key={service.id} value={service.id}>
-                {service.title} - LKR {service.price.toLocaleString('en-LK')}
+                {service.title} with {service.doctorName ?? 'Doctor A'} - LKR{' '}
+                {service.price.toLocaleString('en-LK')}
               </option>
             ))}
           </select>

@@ -49,6 +49,7 @@ export function ServiceForm({
         if (
           fieldName === "title" ||
           fieldName === "description" ||
+          fieldName === "doctorName" ||
           fieldName === "duration" ||
           fieldName === "price" ||
           fieldName === "isActive"
@@ -129,6 +130,41 @@ export function ServiceForm({
           <p className="text-sm text-red-600">
             {errors.description.message}
           </p>
+        )}
+      </div>
+
+      <div className="space-y-2">
+        <label
+          htmlFor="doctorName"
+          className="block text-sm font-medium text-slate-800"
+        >
+          Assigned doctor
+          <span className="text-red-600" aria-hidden="true"> *</span>
+        </label>
+
+        <input
+          id="doctorName"
+          type="text"
+          placeholder="Example: Doctor A"
+          disabled={isSubmitting}
+          {...register("doctorName", {
+            onChange: (event) => {
+              setValue("doctorName", capitalizeWords(event.target.value), {
+                shouldDirty: true,
+                shouldValidate: true,
+              });
+            },
+            onBlur: (event) => {
+              setValue("doctorName", capitalizeWords(event.target.value), {
+                shouldValidate: true,
+              });
+            },
+          })}
+          className="h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-200 disabled:cursor-not-allowed disabled:bg-slate-100"
+        />
+
+        {errors.doctorName?.message && (
+          <p className="text-sm text-red-600">{errors.doctorName.message}</p>
         )}
       </div>
 

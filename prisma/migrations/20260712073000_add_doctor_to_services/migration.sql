@@ -1,0 +1,1 @@
+ALTER TABLE "Service" ADD COLUMN "doctorName" TEXT NOT NULL DEFAULT 'Doctor A';

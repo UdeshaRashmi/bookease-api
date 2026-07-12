@@ -81,10 +81,10 @@ export function SiteFooter() {
         <div className="space-y-5">
           <Link
             href="/"
-            className="inline-flex rounded-2xl bg-white px-3 py-2"
+            className="inline-flex"
             aria-label="Go to BookEase home page"
           >
-            <BrandLogo />
+            <BrandLogo variant="footer" />
           </Link>
 
           <p className="max-w-md text-sm leading-6 text-slate-300">

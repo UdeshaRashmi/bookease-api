@@ -13,6 +13,9 @@ export class ServicesService {
       data: {
         ...createServiceDto,
         title: capitalizeWords(createServiceDto.title.trim()),
+        doctorName: createServiceDto.doctorName
+          ? capitalizeWords(createServiceDto.doctorName.trim())
+          : undefined,
       },
     });
   }
@@ -46,6 +49,9 @@ export class ServicesService {
         ...updateServiceDto,
         title: updateServiceDto.title
           ? capitalizeWords(updateServiceDto.title.trim())
+          : undefined,
+        doctorName: updateServiceDto.doctorName
+          ? capitalizeWords(updateServiceDto.doctorName.trim())
           : undefined,
       },
     });

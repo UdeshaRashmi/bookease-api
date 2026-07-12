@@ -32,6 +32,18 @@ export class CreateServiceDto {
   @IsNotEmpty()
   description!: string;
 
+  @ApiPropertyOptional({
+    description: 'Doctor assigned to the service',
+    example: 'Doctor A',
+    default: 'Doctor A',
+  })
+  @IsOptional()
+  @IsString()
+  @Transform(({ value }) =>
+    typeof value === 'string' ? capitalizeWords(value.trim()) : value,
+  )
+  doctorName?: string;
+
   @ApiProperty({
     description: 'Service duration in minutes',
     example: 45,

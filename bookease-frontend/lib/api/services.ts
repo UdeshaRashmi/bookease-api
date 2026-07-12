@@ -4,7 +4,7 @@ import type { Service } from '@/types/service';
 
 export type CreateServiceData = Pick<
   Service,
-  'title' | 'description' | 'duration' | 'price' | 'isActive'
+  'title' | 'description' | 'doctorName' | 'duration' | 'price' | 'isActive'
 >;
 
 export type UpdateServiceData = Partial<CreateServiceData>;

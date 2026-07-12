@@ -174,6 +174,7 @@ export default function AdminServicesPage() {
               <thead className="bg-slate-50 text-xs font-semibold tracking-wide text-slate-600 uppercase">
                 <tr>
                   <th className="px-6 py-4">Service</th>
+                  <th className="px-6 py-4">Doctor</th>
                   <th className="px-6 py-4">Duration</th>
                   <th className="px-6 py-4">Price</th>
                   <th className="px-6 py-4">Status</th>
@@ -201,6 +202,10 @@ export default function AdminServicesPage() {
                             {service.description}
                           </p>
                         </div>
+                      </td>
+
+                      <td className="px-6 py-4 text-sm font-medium text-slate-900">
+                        {service.doctorName ?? "Doctor A"}
                       </td>
 
                       <td className="px-6 py-4 text-sm text-slate-700">
@@ -288,6 +293,13 @@ export default function AdminServicesPage() {
                     </div>
 
                     <dl className="grid gap-3 text-sm min-[420px]:grid-cols-2">
+                      <div>
+                        <dt className="text-slate-500">Doctor</dt>
+                        <dd className="mt-1 font-medium text-slate-900">
+                          {service.doctorName ?? "Doctor A"}
+                        </dd>
+                      </div>
+
                       <div>
                         <dt className="text-slate-500">Duration</dt>
                         <dd className="mt-1 font-medium text-slate-900">

@@ -32,6 +32,17 @@ export class UpdateServiceDto {
   description?: string;
 
   @ApiPropertyOptional({
+    description: 'Updated doctor assigned to the service',
+    example: 'Doctor B',
+  })
+  @IsOptional()
+  @IsString()
+  @Transform(({ value }) =>
+    typeof value === 'string' ? capitalizeWords(value.trim()) : value,
+  )
+  doctorName?: string;
+
+  @ApiPropertyOptional({
     description: 'Updated duration in minutes',
     example: 60,
     minimum: 1,

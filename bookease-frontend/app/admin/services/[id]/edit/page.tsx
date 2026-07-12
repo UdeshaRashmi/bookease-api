@@ -42,6 +42,7 @@ export default function EditServicePage() {
     return {
       title: service.title,
       description: service.description,
+      doctorName: service.doctorName ?? "Doctor A",
       duration: service.duration,
       price: service.price,
       isActive: service.isActive,

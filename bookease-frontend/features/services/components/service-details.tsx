@@ -123,6 +123,9 @@ export function ServiceDetails({ serviceId }: ServiceDetailsProps) {
             <h1 className="mt-6 break-words text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
               {service.title}
             </h1>
+            <p className="mt-3 text-base font-semibold text-teal-700">
+              {service.doctorName ?? 'Doctor A'}
+            </p>
 
             <p className="mt-6 max-w-3xl text-base leading-8 text-muted-foreground sm:text-lg">
               {service.description}
